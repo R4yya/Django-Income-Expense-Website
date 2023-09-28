@@ -9,9 +9,12 @@
                 <div class="card-title py-3 text-center">
                     <h4>Create new account</h4>
                 </div>
-                <form action="" method="post" class="d-grid gap-4">
+                <form action="" method="post" class="d-grid gap-3">
                     <div class="form-group">
                         <input type="text" name="username" placeholder="Username" id="usernameField" class="form-control form-control-sn">
+                    </div>
+                    <div class="invalid_feedback invalid-feedback" style="display: none">
+                        
                     </div>
                     <div class="form-group">
                         <input type="email" name="e-mail" placeholder="E-Mail" id="emailField" class="form-control form-control-sn">
@@ -27,4 +30,5 @@
     </div>
     <div class="col-md-4"></div>
 </div>
+<script src="{% static 'js/register.js' %}"></script>
 {% endblock %}
