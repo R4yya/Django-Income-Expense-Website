@@ -3,6 +3,7 @@ from django.views import View
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.core.mail import EmailMessage
 
 import json
 from validate_email import validate_email
@@ -32,7 +33,17 @@ class RegistrationView(View):
 
                 user = User.objects.create_user(username=username, email=email)
                 user.set_password(password)
+                user.is_active = False
                 user.save()
+
+                verification_email_subject = 'YourExpenses account activation'
+                verification_email_body = ''
+                verification_email = EmailMessage(
+                    verification_email_subject,
+                    verification_email_body,
+                    'noreply@semycolon.com',
+                    [email]
+                )
 
                 messages.success(request, 'Account successfully created')
 
