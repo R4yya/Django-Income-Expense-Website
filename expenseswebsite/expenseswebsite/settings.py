@@ -9,10 +9,11 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+from dotenv import load_dotenv
 from pathlib import Path
 import os
-from dotenv import load_dotenv
+
+from django.contrib import messages
 
 # Load variables from .env
 load_dotenv()
@@ -133,3 +134,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'expenseswebsite', 'static')]
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger'
+}
