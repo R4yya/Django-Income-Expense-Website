@@ -135,6 +135,15 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'expenseswebsite', 'static')]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Redefine msg.error in order to django and bootstrap better communication
 MESSAGE_TAGS = {
     messages.ERROR: 'danger'
 }
+
+# Email stuff
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIl = os.getenv('EMAIL_HOST_USER')
+EMAIL_PORT = 587
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
