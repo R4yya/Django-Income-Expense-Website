@@ -9,7 +9,9 @@
                 <div class="card-title py-3 text-center">
                     <h4>Create new account</h4>
                 </div>
-                <form action="" method="post" class="d-grid gap-3">
+                <form action="{% url 'register' %}" method="post" class="d-grid gap-3">
+                    {% csrf_token %}
+                    {% include 'partials/_messages.html' %}
                     <div class="form-group">
                         <input type="text" name="username" placeholder="Username" id="usernameField" class="form-control form-control-sn">
                     </div>
