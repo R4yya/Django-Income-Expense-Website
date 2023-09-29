@@ -1,18 +1,20 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 from django.http import JsonResponse
-from django.contrib.auth.models import User
 from django.contrib import messages
+from django.contrib.auth.models import User
+from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
+from django.utils.encoding import force_bytes, force_str, DjangoUnicodeDecodeError
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.urls import reverse
 
 import json
+from .utils import account_activation_token
 from validate_email import validate_email
 
 
 class RegistrationView(View):
-    def __init__(self):
-        pass
-
     def get(self, request):
         return render(request, 'authentication/register.html')
 
@@ -36,14 +38,39 @@ class RegistrationView(View):
                 user.is_active = False
                 user.save()
 
-                verification_email_subject = 'YourExpenses account activation'
-                verification_email_body = ''
+                uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
+
+                domain = get_current_site(request).domain
+                link = reverse('activate', kwargs={'uidb64': uidb64, 'token': account_activation_token.make_token(user)})
+                activation_url = f'http://{domain}{link}'
+
+                verification_email_subject = 'Welcome to YourExpenseManager'
+                verification_email_body = f'''
+                    Dear {user.username},
+
+                    Thank you for choosing YourExpenseManager! We're excited to have you on board.
+
+                    To get started, please click on the link below to activate your account:
+                    {activation_url}
+
+                    Once your account is activated, you'll have access to all the powerful tools and features that YourExpenseManager has to offer, allowing you to effortlessly track your expenses and income.
+
+                    If you have not registered in YourExpenseManager, just ignore this message.
+
+                    If you have any questions or need assistance, simply reply to this email.
+
+                    Thank you for trusting us with your financial journey. We look forward to helping you achieve your financial goals!
+
+                    Best regards,
+                    The YourExpenseManager Team
+                '''
                 verification_email = EmailMessage(
                     verification_email_subject,
                     verification_email_body,
                     'noreply@semycolon.com',
                     [email]
                 )
+                verification_email.send(fail_silently=False)
 
                 messages.success(request, 'Account successfully created')
 
@@ -52,10 +79,37 @@ class RegistrationView(View):
         return render(request, 'authentication/register.html')
 
 
-class UsernameValidationView(View):
-    def __init__(self):
-        pass
+class LoginView(View):
+    def get(self, request):
+        return render(request, 'authentication/login.html')
 
+
+class VerificationView(View):
+    def get(self, request, uidb64, token):
+        try:
+            uid = force_str(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(pk=uid)
+
+            if not account_activation_token.check_token(user, token):
+                return redirect('login'+'?message='+'User already activated')
+
+            if user.is_active:
+                return redirect('login')
+
+            user.is_active = True
+            user.save()
+
+            messages.success(request, 'Account activated successfully')
+
+            return redirect('login')
+
+        except Exception as e:
+            raise e
+         
+        return redirect('login')
+
+
+class UsernameValidationView(View):
     def post(self, request):
         data = json.loads(request.body)
         username = data['username']
@@ -69,9 +123,6 @@ class UsernameValidationView(View):
 
 
 class EmailValidationView(View):
-    def __init__(self):
-        pass
-
     def post(self, request):
         data = json.loads(request.body)
         email = data['email']
