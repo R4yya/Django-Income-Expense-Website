@@ -1,20 +1,24 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container">
-    {% include 'partials/_messages.html' %}
-    <h2>Expenses List</h2>
-    <ul class="list-group">
-        <li class="list-group-item">Bought beer</li>
-        <li class="list-group-item">Bought beer</li>
-        <li class="list-group-item">Bought beer</li>
-        <li class="list-group-item">Bought beer</li>
-        <li class="list-group-item">Bought beer</li>
-        <li class="list-group-item">Bought beer</li>
-        <li class="list-group-item">Bought beer</li>
-        <li class="list-group-item">Bought beer</li>
-        <li class="list-group-item">Bought beer</li>
-        <li class="list-group-item">Bought beer</li>
-    </ul>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-10">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="">Expenses</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        My Expenses
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        <div class="col-md-2">
+            <a href="{% url 'add-expense' %} " class="btn btn-sm btn-primary">Add Expense</a>
+        </div>
+    </div>
 </div>
+{% include 'partials/_messages.html' %}
 {% endblock %}
