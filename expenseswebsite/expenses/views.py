@@ -8,4 +8,4 @@ def index(request):
 
 
 def add_expense(request):
-    return render(request, 'expenses/add_expense.html')
+    return render(request, 'expenses/add-expense.html')
