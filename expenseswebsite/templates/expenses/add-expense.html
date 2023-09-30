@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% block content %}
 <div class="container mt-4">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -10,10 +11,30 @@
             </li>
         </ol>
     </nav>
-    <form action="{% url 'expenses' %}" method="post">
-        
-    </form>
+    <div class="card">
+        <div class="card-body py-3 ">
+            <form action="{% url 'expenses' %}" method="post">
+                <div class="from-group mb-3">
+                    <label for="">Amount</label>
+                    <input name="amount" type="number" class="form-control form-control-sm">
+                </div>
+                <div class="from-group mb-3">
+                    <label for="">Category</label>
+                    <select name="category" id="" class="form-control form-control-sm">
+                        <option name="category" value="">asdasd</option>
+                    </select>
+                </div>
+                <div class="from-group mb-3">
+                    <label for="">Description</label>
+                    <input name="description" type="text" class="form-control form-control-sm">
+                </div>
+                <div class="from-group mb-3">
+                    <label for="">Date</label>
+                    <input name="expense_date" type="date" class="form-control form-control-sm">
+                </div>
+                <input type="submit" value="Submit" class="btn btn-outline-success btn-outline-success-sm float-end">
+            </form>
+        </div>
+    </div>
 </div>
-{% block content %}
-<h2>Add Expense</h2>
 {% endblock %}
