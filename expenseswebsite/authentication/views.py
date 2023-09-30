@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.http import JsonResponse
 from django.contrib import messages
+from django.contrib import auth
 from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
@@ -46,23 +47,23 @@ class RegistrationView(View):
 
                 verification_email_subject = 'Welcome to YourExpenseManager'
                 verification_email_body = f'''
-                    Dear {user.username},
+                Dear {user.username},
 
-                    Thank you for choosing YourExpenseManager! We're excited to have you on board.
+                Thank you for choosing YourExpenseManager! We're excited to have you on board.
 
-                    To get started, please click on the link below to activate your account:
-                    {activation_url}
+                To get started, please click on the link below to activate your account:
+                {activation_url}
 
-                    Once your account is activated, you'll have access to all the powerful tools and features that YourExpenseManager has to offer, allowing you to effortlessly track your expenses and income.
+                Once your account is activated, you'll have access to all the powerful tools and features that YourExpenseManager has to offer, allowing you to effortlessly track your expenses and income.
 
-                    If you have not registered in YourExpenseManager, just ignore this message.
+                If you have not registered in YourExpenseManager, just ignore this message.
 
-                    If you have any questions or need assistance, simply reply to this email.
+                If you have any questions or need assistance, simply reply to this email.
 
-                    Thank you for trusting us with your financial journey. We look forward to helping you achieve your financial goals!
+                Thank you for trusting us with your financial journey. We look forward to helping you achieve your financial goals!
 
-                    Best regards,
-                    The YourExpenseManager Team
+                Best regards,
+                The YourExpenseManager Team
                 '''
                 verification_email = EmailMessage(
                     verification_email_subject,
@@ -82,6 +83,28 @@ class RegistrationView(View):
 class LoginView(View):
     def get(self, request):
         return render(request, 'authentication/login.html')
+
+    def post(self, request):
+        username = request.POST['username']
+        password = request.POST['password']
+
+        if username and password:
+            user = auth.authenticate(username=username, password=password)
+            if user:
+                if user.is_active:
+                    auth.login(request, user)
+                    messages.success(request, f'Welcome, {user.username} You are now logged in')
+                    return redirect('expenses')
+
+                else:
+                    messages.error(request, 'Account is not activated, please check your Email')
+                    return render(request, 'authentication/login.html')
+            else:
+                messages.error(request, 'Invalid credentials, try again')
+                return render(request, 'authentication/login.html')
+        else:
+            messages.error(request, 'Please fill all fields')
+            return render(request, 'authentication/login.html')
 
 
 class VerificationView(View):
@@ -105,7 +128,7 @@ class VerificationView(View):
 
         except Exception as e:
             raise e
-         
+
         return redirect('login')
 
 
