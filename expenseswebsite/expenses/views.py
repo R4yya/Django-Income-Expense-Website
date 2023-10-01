@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 from .models import Category, Expense
 
@@ -13,6 +14,35 @@ def index(request):
 def add_expense(request):
     categories = Category.objects.all()
     context = {
-        'categories': categories
+        'categories': categories,
+        'values': request.POST
     }
-    return render(request, 'expenses/add-expense.html', context)
+
+    if request.method == 'GET':
+        return render(request, 'expenses/add-expense.html', context)
+
+    if request.method == 'POST':
+        amount = request.POST['amount']
+        description = request.POST['description']
+        date = request.POST['expense_date']
+        category = request.POST['category']
+
+        if not amount:
+            messages.error(request, 'Amount is required')
+            return render(request, 'expenses/add-expense.html', context)
+
+        
+        if not description:
+            messages.error(request, 'Description is required')
+            return render(request, 'expenses/add-expense.html', context)
+
+        Expense.objects.create(
+            owner=request.user,
+            amount=amount, 
+            date=date, 
+            category=category, 
+            description=description
+        )
+        messages.success(request, 'Expense saved saccessfully')
+
+        return redirect('expenses')
