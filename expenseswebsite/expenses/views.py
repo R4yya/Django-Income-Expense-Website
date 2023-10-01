@@ -28,9 +28,10 @@ def add_expense(request):
 
     elif request.method == 'POST':
         amount = request.POST['amount']
+        category = request.POST['category']
         description = request.POST['description']
         date = request.POST['expense_date']
-        category = request.POST['category']
+        
 
         if not amount:
             messages.error(request, 'Amount is required')
@@ -41,6 +42,10 @@ def add_expense(request):
             messages.error(request, 'Description is required')
             return render(request, 'expenses/add-expense.html', context)
 
+        if not date:
+            messages.error(request, 'Date is required')
+            return render(request, 'expenses/add-expense.html', context)
+
         Expense.objects.create(
             owner=request.user,
             amount=amount, 
@@ -48,21 +53,52 @@ def add_expense(request):
             category=category, 
             description=description
         )
+
         messages.success(request, 'Expense saved saccessfully')
 
         return redirect('expenses')
 
 
 def edit_expense(request, id):
+    categories = Category.objects.all()
     expense = Expense.objects.get(pk=id)
     context = {
         'expense': expense,
-        'values': expense
+        'values': expense,
+        'categories': categories
     }
 
     if request.method == 'GET':
         return render(request, 'expenses/edit-expense.html', context)
 
     elif request.method == 'POST':
-        messages.info(request, 'Handling post form')
-        return render(request, 'expenses/edit-expense.html', context)
+        amount = request.POST['amount']
+        category = request.POST['category']
+        description = request.POST['description']
+        date = request.POST['expense_date']
+        
+
+        if not amount:
+            messages.error(request, 'Amount is required')
+            return render(request, 'expenses/edit-expense.html', context)
+
+        
+        if not description:
+            messages.error(request, 'Description is required')
+            return render(request, 'expenses/edit-expense.html', context)
+
+        if not date:
+            messages.error(request, 'Date is required')
+            return render(request, 'expenses/edit-expense.html', context)
+
+        expense.owner = request.user
+        expense.amount = amount
+        expense.date = date
+        expense.category = category
+        expense.description = description
+
+        expense.save()
+
+        messages.success(request, 'Expense updated saccessfully')
+
+        return redirect('expenses')
