@@ -14,6 +14,7 @@
     <div class="card">
         <div class="card-body py-3 ">
             <form action="{% url 'expenses' %}" method="post">
+                {% csrf_token %}
                 <div class="from-group mb-3">
                     <label for="">Amount</label>
                     <input name="amount" type="number" class="form-control form-control-sm">
