@@ -26,7 +26,7 @@ def add_expense(request):
     if request.method == 'GET':
         return render(request, 'expenses/add-expense.html', context)
 
-    if request.method == 'POST':
+    elif request.method == 'POST':
         amount = request.POST['amount']
         description = request.POST['description']
         date = request.POST['expense_date']
@@ -51,3 +51,18 @@ def add_expense(request):
         messages.success(request, 'Expense saved saccessfully')
 
         return redirect('expenses')
+
+
+def edit_expense(request, id):
+    expense = Expense.objects.get(pk=id)
+    context = {
+        'expense': expense,
+        'values': expense
+    }
+
+    if request.method == 'GET':
+        return render(request, 'expenses/edit-expense.html', context)
+
+    elif request.method == 'POST':
+        messages.info(request, 'Handling post form')
+        return render(request, 'expenses/edit-expense.html', context)
