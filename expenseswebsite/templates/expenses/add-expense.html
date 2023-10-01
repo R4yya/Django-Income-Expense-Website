@@ -21,7 +21,9 @@
                 <div class="from-group mb-3">
                     <label for="">Category</label>
                     <select name="category" id="" class="form-control form-control-sm">
-                        <option name="category" value="">asdasd</option>
+                        {% for category in categories %}
+                        <option name="category" value="{{category.name}}">{{category.name}}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="from-group mb-3">
