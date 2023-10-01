@@ -8,7 +8,12 @@ from .models import Category, Expense
 @login_required(login_url='/authentication/login')
 def index(request):
     categories = Category.objects.all()
-    return render(request, 'expenses/index.html')
+    expenses = Expense.objects.filter(owner=request.user)
+    context = {
+        'expenses': expenses
+    }
+
+    return render(request, 'expenses/index.html', context)
 
 
 def add_expense(request):
