@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{% url 'expenses' %}">Expenses</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                Edit Expense
+            </li>
+        </ol>
+    </nav>
+    <div class="card">
+        <div class="card-body py-3 ">
+            <form action="{% url 'add-expense' %}" method="post">
+                {% include 'partials/_messages.html' %}
+                {% csrf_token %}
+                <div class="from-group mb-3">
+                    <label for="">Amount</label>
+                    <input name="amount" type="number" class="form-control form-control-sm" value="{{values.amount}}">
+                </div>
+                <div class="from-group mb-3">
+                    <label for="">Category</label>
+                    <select name="category" id="" class="form-control form-control-sm">
+                        {% for category in categories %}
+                        <option name="category" value="{{category.name}}">{{category.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="from-group mb-3">
+                    <label for="">Description</label>
+                    <input name="description" type="text" class="form-control form-control-sm" value="{{values.description}}">
+                </div>
+                <div class="from-group mb-3">
+                    <label for="">Date</label>
+                    <input name="expense_date" type="date" class="form-control form-control-sm" value="{{values.expense_date}}">
+                </div>
+                <input type="submit" value="Save" class="btn btn-outline-dark float-end">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
