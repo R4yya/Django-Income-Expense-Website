@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.core.paginator import Paginator
 
 from .models import Category, Expense
 
@@ -9,11 +10,16 @@ from .models import Category, Expense
 def index(request):
     categories = Category.objects.all()
     expenses = Expense.objects.filter(owner=request.user)
+    paginator = Paginator(expenses, 5)
+    page_number = request.GET.get('page')
+    page_obj = Paginator.get_page(paginator, page_number)
     context = {
-        'expenses': expenses
+        'expenses': expenses,
+        'page_obj': page_obj
     }
 
     return render(request, 'expenses/index.html', context)
+
 
 def add_expense(request):
     categories = Category.objects.all()
@@ -30,13 +36,11 @@ def add_expense(request):
         category = request.POST['category']
         description = request.POST['description']
         date = request.POST['expense_date']
-        
 
         if not amount:
             messages.error(request, 'Amount is required')
             return render(request, 'expenses/add-expense.html', context)
 
-        
         if not description:
             messages.error(request, 'Description is required')
             return render(request, 'expenses/add-expense.html', context)
@@ -47,15 +51,16 @@ def add_expense(request):
 
         Expense.objects.create(
             owner=request.user,
-            amount=amount, 
-            date=date, 
-            category=category, 
+            amount=amount,
+            date=date,
+            category=category,
             description=description
         )
 
         messages.success(request, 'Expense saved saccessfully')
 
         return redirect('expenses')
+
 
 def edit_expense(request, id):
     categories = Category.objects.all()
@@ -74,13 +79,11 @@ def edit_expense(request, id):
         category = request.POST['category']
         description = request.POST['description']
         date = request.POST['expense_date']
-        
 
         if not amount:
             messages.error(request, 'Amount is required')
             return render(request, 'expenses/edit-expense.html', context)
 
-        
         if not description:
             messages.error(request, 'Description is required')
             return render(request, 'expenses/edit-expense.html', context)
@@ -100,6 +103,7 @@ def edit_expense(request, id):
         messages.success(request, 'Expense updated saccessfully')
 
         return redirect('expenses')
+
 
 def delete_expense(request, id):
     expense = Expense.objects.get(pk=id)
