@@ -15,7 +15,6 @@ def index(request):
 
     return render(request, 'expenses/index.html', context)
 
-
 def add_expense(request):
     categories = Category.objects.all()
     context = {
@@ -57,7 +56,6 @@ def add_expense(request):
         messages.success(request, 'Expense saved saccessfully')
 
         return redirect('expenses')
-
 
 def edit_expense(request, id):
     categories = Category.objects.all()
@@ -102,3 +100,11 @@ def edit_expense(request, id):
         messages.success(request, 'Expense updated saccessfully')
 
         return redirect('expenses')
+
+def delete_expense(request, id):
+    expense = Expense.objects.get(pk=id)
+    expense.delete()
+
+    messages.success(request, 'Expense removed')
+
+    return redirect('expenses')
