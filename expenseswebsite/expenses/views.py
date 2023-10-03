@@ -28,10 +28,10 @@ def search_expenses(request):
         search_string = loads(request.body).get('searchText')
 
         expenses = Expense.objects.filter(
-            amount__starts_with=search_string,mowner=request.user) | Expense.objects.filter(
-            date__starts_with=search_string, owner=request.user) | Expense.objects.filter(
-            discription__icontains=search_string, owner=request.user) | Expense.objects.filter(
-            category__starts_with=search_string, owner=request.user)
+            amount__istartswith=search_string, owner=request.user) | Expense.objects.filter(
+            date__istartswith=search_string, owner=request.user) | Expense.objects.filter(
+            description__icontains=search_string, owner=request.user) | Expense.objects.filter(
+            category__icontains=search_string, owner=request.user)
 
         data = expenses.values()
 
