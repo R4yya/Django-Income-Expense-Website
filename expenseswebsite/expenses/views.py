@@ -2,8 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator
+from django.http import JsonResponse
 
 from .models import Category, Expense
+from json import loads
 
 
 @login_required(login_url='/authentication/login')
@@ -19,6 +21,21 @@ def index(request):
     }
 
     return render(request, 'expenses/index.html', context)
+
+
+def search_expenses(request):
+    if request.method == 'POST':
+        search_string = loads(request.body).get('searchText')
+
+        expenses = Expense.objects.filter(
+            amount__starts_with=search_string,mowner=request.user) | Expense.objects.filter(
+            date__starts_with=search_string, owner=request.user) | Expense.objects.filter(
+            discription__icontains=search_string, owner=request.user) | Expense.objects.filter(
+            category__starts_with=search_string, owner=request.user)
+
+        data = expenses.values()
+
+        return JsonResponse(list(data), safe=False)
 
 
 def add_expense(request):
