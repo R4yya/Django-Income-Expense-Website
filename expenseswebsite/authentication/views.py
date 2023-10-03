@@ -93,7 +93,7 @@ class LoginView(View):
             if user:
                 if user.is_active:
                     auth.login(request, user)
-                    messages.success(request, f'Welcome, {user.username} You are now logged in')
+                    messages.success(request, f'Welcome, {user.username}, You are now logged in')
                     return redirect('expenses')
 
                 else:
@@ -108,7 +108,7 @@ class LoginView(View):
 
 
 class LogoutView(View):
-    def post (self, request):
+    def post(self, request):
         auth.logout(request)
         messages.success(request, 'You have been logged out')
         return redirect('login')
