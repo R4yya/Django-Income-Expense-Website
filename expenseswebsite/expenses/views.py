@@ -40,6 +40,7 @@ def search_expenses(request):
         return JsonResponse(list(data), safe=False)
 
 
+@login_required(login_url='/authentication/login')
 def add_expense(request):
     categories = Category.objects.all()
     context = {
@@ -76,11 +77,12 @@ def add_expense(request):
             description=description
         )
 
-        messages.success(request, 'Expense saved saccessfully')
+        messages.success(request, 'Expense saved successfully')
 
         return redirect('expenses')
 
 
+@login_required(login_url='/authentication/login')
 def edit_expense(request, id):
     categories = Category.objects.all()
     expense = Expense.objects.get(pk=id)
@@ -95,13 +97,14 @@ def edit_expense(request, id):
 
     elif request.method == 'POST':
         amount = request.POST['amount']
-        category = request.POST['category']
-        description = request.POST['description']
-        date = request.POST['expense_date']
 
         if not amount:
             messages.error(request, 'Amount is required')
             return render(request, 'expenses/edit-expense.html', context)
+
+        category = request.POST['category']
+        description = request.POST['description']
+        date = request.POST['expense_date']
 
         if not description:
             messages.error(request, 'Description is required')
@@ -119,7 +122,7 @@ def edit_expense(request, id):
 
         expense.save()
 
-        messages.success(request, 'Expense updated saccessfully')
+        messages.success(request, 'Expense updated successfully')
 
         return redirect('expenses')
 
