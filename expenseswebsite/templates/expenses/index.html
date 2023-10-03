@@ -24,23 +24,23 @@
             {% include 'partials/_messages.html' %}
         </div>
         {% if expenses.count %}
-        <div class="row">
+        <div class="row my-3">
             <div class="col-md-7"></div>
             <div class="col-md-5">
                 <div class="form-group">
-                    <input type="text" class="form-control form-control-sm" id="searchField" placeholder="Search">
+                    <input type="text" class="form-control form-control-sm " id="searchField" placeholder="Search">
                 </div>
             </div>
         </div>
         <div class="app-table">
-            <table class="table table-sm table-stripped table-hover">
+            <table class="table table-sm table-stripped table-hover align-middle">
                 <thead>
                     <tr>
                         <th>Amount (CURRENCY)</th>
                         <th>Category</th>
                         <th>Description</th>
                         <th>Date</th>
-                        <th></th>
+                        <th>Options</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -52,12 +52,14 @@
                         <td>{{expense.date}}</td>
                         <td>
                             <a href="{% url 'edit-expense' expense.id %}" class="btn btn-sm btn-info">Edit</a>
+                            <a href="{% url 'delete-expense' expense.id %}" class="btn btn-sm btn-danger">Delete</a>
                         </td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
+        <p class="no-results" style="display: none;">No results found</p>
         <div class="table-output">
             <table class="table table-sm table-stripped table-hover">
                 <thead>
@@ -66,12 +68,9 @@
                         <th>Category</th>
                         <th>Description</th>
                         <th>Date</th>
-                        <th></th>
                     </tr>
                 </thead>
-                <tbody class="table-body">
-
-                </tbody>
+                <tbody class="table-body"></tbody>
             </table>
         </div>
         <div class="pagination-container">
