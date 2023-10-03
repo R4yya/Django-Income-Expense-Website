@@ -7,7 +7,9 @@ const appTable = document.querySelector(".app-table");
 
 const paginationContainer = document.querySelector(".pagination-container");
 
-const tableBody = document.querySelector(".table-body")
+const noResults = document.querySelector(".no-results");
+
+const tableBody = document.querySelector(".table-body");
 
 searchField.addEventListener("keyup", (e) => {
     const searchValue = e.target.value;
@@ -27,8 +29,10 @@ searchField.addEventListener("keyup", (e) => {
                 tableOutput.style.display = "block";
 
                 if (data.length === 0){
-                    tableOutput.innerHTML = 'No results found'
+                    noResults.style.display = "block";
+                    tableOutput.style.display = "none";
                 } else {
+                    noResults.style.display = "none";
                     data.forEach((item) => {
                         tableBody.innerHTML += `
                             <tr>
@@ -38,11 +42,11 @@ searchField.addEventListener("keyup", (e) => {
                             <td>${item.date}</td>
                             </tr>`;
                     });
-                }
+                };
             });
     } else {
         tableOutput.style.display = "none";
         appTable.style.display = "block";
         paginationContainer.style.display = "block";
-    }
+    };
 });
