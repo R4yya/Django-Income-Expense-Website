@@ -135,7 +135,7 @@ class VerificationView(View):
             return redirect('login')
 
         except Exception as e:
-            raise e
+            messages.info(request, f'Something went wrong: {e}')
 
         return redirect('login')
 
@@ -205,7 +205,7 @@ class ResetPassword(View):
 
             You will be directed to a page where you can create a new password for your account.
 
-            Please note that this link is valid for a limited time for security reasons. If you did not request this password reset, you can safely ignore this email. Your account's security is important to us.
+            Please note that you can use this link once. If you did not request this password reset, you can safely ignore this email. Your account's security is important to us.
 
             If you have any questions or need further assistance, please don't hesitate to send your questions to this e-mail adress.
 
@@ -234,6 +234,19 @@ class SetNewPassword(View):
             'token': token,
         }
 
+        try:
+            uid = force_str(urlsafe_base64_decode(uidb64))
+
+            user = User.objects.get(pk=uid)
+
+            if not PasswordResetTokenGenerator().check_token(user, token):
+                messages.info(request, 'Password reset link is invalid, please request a new one')
+
+            return render(request, 'authentication/reset-password.html', context)
+
+        except Exception as e:
+            messages.info(request, f'Something went wrong: {e}')
+
         return render(request, 'authentication/set-new-password.html', context)
 
     def post(self, request, uidb64, token):
@@ -241,5 +254,33 @@ class SetNewPassword(View):
             'uidb64': uidb64,
             'token': token,
         }
+
+        password = request.POST['password']
+        password_2 = request.POST['password_2']
+
+        if password != password_2:
+            messages.error(request, 'Passwords do not match')
+
+            return render(request, 'authentication/set-new-password.html', context)
+
+        elif len(password) < 6:
+            messages.error(request, 'Password is too short')
+
+            return render(request, 'authentication/set-new-password.html', context)
+
+        try:
+            uid = force_str(urlsafe_base64_decode(uidb64))
+
+            user = User.objects.get(pk=uid)
+
+            user.set_password(password)
+            user.save()
+
+            messages.success(request, 'Password successfully changed, you can login now with the new password')
+
+            return redirect('login')
+
+        except Exception as e:
+            messages.info(request, f'Something went wrong: {e}')
 
         return render(request, 'authentication/set-new-password.html', context)
