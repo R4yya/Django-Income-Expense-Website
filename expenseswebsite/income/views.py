@@ -60,7 +60,7 @@ def add_income(request):
 
         source = request.POST['source']
         description = request.POST['description']
-        date = request.POST['expense_date']
+        date = request.POST['income_date']
 
         if not description:
             messages.error(request, 'Description is required')
@@ -90,7 +90,7 @@ def edit_income(request, id):
     context = {
         'income': income,
         'values': income,
-        'categories': sources
+        'sources': sources
     }
 
     if request.method == 'GET':
@@ -105,7 +105,7 @@ def edit_income(request, id):
 
         source = request.POST['source']
         description = request.POST['description']
-        date = request.POST['expense_date']
+        date = request.POST['income_date']
 
         if not description:
             messages.error(request, 'Description is required')
