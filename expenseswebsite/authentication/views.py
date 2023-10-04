@@ -163,3 +163,11 @@ class EmailValidationView(View):
             return JsonResponse({'email_error': 'E-mail is alreaady exists'}, status=409)
         else:
             return JsonResponse({'email_valid': True})
+
+
+class ResetPassword(View):
+    def get(self, request):
+        return render(request, 'authentication/reset-password.html')
+
+    def post(self, request):
+        pass
