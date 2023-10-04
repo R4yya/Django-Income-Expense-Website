@@ -14,6 +14,16 @@ from django.urls import reverse
 import json
 from .utils import account_activation_token
 from validate_email import validate_email
+import threading
+
+
+class EmailThread(threading.Thread):
+    def __init__(self, email):
+        self.email = email
+        threading.Thread.__init__(self)
+
+    def run(self):
+        self.email.send(fail_silently=False)
 
 
 class RegistrationView(View):
@@ -72,7 +82,8 @@ class RegistrationView(View):
                     'noreply@semycolon.com',
                     [email]
                 )
-                verification_email.send(fail_silently=False)
+
+                EmailThread(verification_email).start()
 
                 messages.success(request, 'Account successfully created, please check your e-mail and use activation link')
 
@@ -214,13 +225,15 @@ class ResetPassword(View):
             Sincerely,
             The YourExpenseManager Team
             '''
+
             reset_email = EmailMessage(
                 reset_email_subject,
                 reset_email_body,
                 'noreply@semycolon.com',
                 [email]
             )
-            reset_email.send(fail_silently=False)
+
+            EmailThread(reset_email).start()
 
             messages.success(request, 'The request has been processed, We have sent you an e-mail to reset your password')
 
