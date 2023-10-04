@@ -30,9 +30,9 @@ def search_income(request):
         search_string = loads(request.body).get('searchText')
 
         income = Income.objects.filter(
-            amount__istartswith=search_string, owner=request.user) | Expense.objects.filter(
-            date__istartswith=search_string, owner=request.user) | Expense.objects.filter(
-            description__icontains=search_string, owner=request.user) | Expense.objects.filter(
+            amount__istartswith=search_string, owner=request.user) | Income.objects.filter(
+            date__istartswith=search_string, owner=request.user) | Income.objects.filter(
+            description__icontains=search_string, owner=request.user) | Income.objects.filter(
             source__icontains=search_string, owner=request.user)
 
         data = income.values()
