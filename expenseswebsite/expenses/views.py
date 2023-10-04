@@ -132,6 +132,6 @@ def delete_expense(request, id):
     expense = Expense.objects.get(pk=id)
     expense.delete()
 
-    messages.success(request, 'Expense removed')
+    messages.success(request, 'Expense removed successfully')
 
     return redirect('expenses')
