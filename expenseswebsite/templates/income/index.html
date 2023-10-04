@@ -44,15 +44,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for expense in page_obj %}
+                    {% for income in page_obj %}
                     <tr class="text-nowrap">
-                        <td>{{expense.amount}}</td>
-                        <td>{{expense.source}}</td>
-                        <td>{{expense.description}}</td>
-                        <td>{{expense.date}}</td>
+                        <td>{{income.amount}}</td>
+                        <td>{{income.source}}</td>
+                        <td>{{income.description}}</td>
+                        <td>{{income.date}}</td>
                         <td >
-                            <a href="{% url 'edit-expense' expense.id %}" class="btn btn-sm btn-info">Edit</a>
-                            <a href="{% url 'delete-expense' expense.id %}" class="btn btn-sm btn-danger">Delete</a>
+                            <a href="{% url 'edit-income' income.id %}" class="btn btn-sm btn-info">Edit</a>
+                            <a href="{% url 'delete-income' income.id %}" class="btn btn-sm btn-danger">Delete</a>
                         </td>
                     </tr>
                     {% endfor %}
@@ -65,7 +65,7 @@
                 <thead>
                     <tr>
                         <th>Amount ({{currency}})</th>
-                        <th>Category</th>
+                        <th>Source</th>
                         <th>Description</th>
                         <th>Date</th>
                     </tr>
