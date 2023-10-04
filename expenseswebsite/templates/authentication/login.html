@@ -7,7 +7,7 @@
         <div class="card mt-5">
             <div class="card-body">
                 <div class="card-title py-3 text-center">
-                    <h4>Login to your account</h4>
+                    <h3>Login to your account</h3>
                 </div>
                 <form action="{% url 'login' %}" method="post" class="d-grid gap-3">
                     {% csrf_token %}
@@ -20,7 +20,16 @@
                     </div>
                     <input type="submit" value="Login" class="btn btn-outline-primary submit-btn">
                 </form>
+                <div class="container text-center mb-2">
+                    <span class="lead fs-5">Dont have an account? </span>
+                    <a class="lead fs-5" href="{% url 'register' %}">Register</a>
+                </div>
+                <div class="container text-center">
+                    <span class="lead fs-5">Forgot your password? </span>
+                    <a class="lead fs-5" href="{% url 'reset-password' %}">Reset it</a>
+                </div>
             </div>
+            
         </div>
     </div>
     <div class="col-md-4"></div>
