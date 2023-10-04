@@ -7,7 +7,7 @@
         <div class="card mt-5">
             <div class="card-body">
                 <div class="card-title py-3 text-center">
-                    <h4>Create new account</h4>
+                    <h3>Create new account</h3>
                 </div>
                 <form action="{% url 'register' %}" method="post" class="d-grid gap-3">
                     {% csrf_token %}
@@ -28,6 +28,10 @@
                     </div>
                     <input type="submit" value="Register" class="btn btn-outline-primary submit-btn">
                 </form>
+                <div class="container text-center">
+                    <span class="lead fs-5">Already have an account? </span>
+                    <a class="lead fs-5" href="{% url 'login' %}">Login</a>
+                </div>
             </div>
         </div>
     </div>
