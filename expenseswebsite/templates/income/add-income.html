@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{% url 'income' %}">Income</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                Add Income
+            </li>
+        </ol>
+    </nav>
+    <div class="card">
+        <div class="card-body py-3 ">
+            <form action="{% url 'add-income' %}" method="post">
+                {% include 'partials/_messages.html' %}
+                {% csrf_token %}
+                <div class="from-group mb-3">
+                    <label for="">Amount</label>
+                    <input name="amount" type="number" class="form-control form-control-sm" value="{{values.amount}}">
+                </div>
+                <div class="from-group mb-3">
+                    <label for="">Source</label>
+                    <select name="source" id="" class="form-control form-control-sm">
+                        {% for source in sources %}
+                        <option name="source" value="{{source.name}}">{{source.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="from-group mb-3">
+                    <label for="">Description</label>
+                    <input name="description" type="text" class="form-control form-control-sm" value="{{values.description}}">
+                </div>
+                <div class="from-group mb-3">
+                    <label for="">Date</label>
+                    <input name="income_date" type="date" class="form-control form-control-sm" value="{{values.income_date}}">
+                </div>
+                <input type="submit" value="Save" class="btn btn-outline-success float-end">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
