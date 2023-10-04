@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from django.contrib import messages
 from django.contrib import auth
 from django.contrib.auth.models import User
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
 from django.utils.encoding import force_bytes, force_str, DjangoUnicodeDecodeError
@@ -73,7 +74,7 @@ class RegistrationView(View):
                 )
                 verification_email.send(fail_silently=False)
 
-                messages.success(request, 'Account successfully created')
+                messages.success(request, 'Account successfully created, please check your e-mail and use activation link')
 
                 return render(request, 'authentication/register.html')
 
@@ -146,8 +147,10 @@ class UsernameValidationView(View):
 
         if not str(username).isalnum():
             return JsonResponse({'username_error': 'Username should only contain alphanumeric characters'}, status=400)
-        if User.objects.filter(username=username).exists():
+
+        elif User.objects.filter(username=username).exists():
             return JsonResponse({'username_error': 'Username is alreaady exists'}, status=409)
+
         else:
             return JsonResponse({'username_valid': True})
 
@@ -159,8 +162,10 @@ class EmailValidationView(View):
 
         if not validate_email(email):
             return JsonResponse({'email_error': 'E-mail is invalid'}, status=400)
-        if User.objects.filter(email=email).exists():
+
+        elif User.objects.filter(email=email).exists():
             return JsonResponse({'email_error': 'E-mail is alreaady exists'}, status=409)
+
         else:
             return JsonResponse({'email_valid': True})
 
@@ -170,4 +175,71 @@ class ResetPassword(View):
         return render(request, 'authentication/reset-password.html')
 
     def post(self, request):
-        pass
+        email = request.POST['email']
+        user = User.objects.filter(email=email)
+        context = {
+            'values': request.POST
+        }
+
+        if not validate_email(email):
+            messages.error(request, 'E-mail is invalid')
+
+        elif not user.exists():
+            messages.error(request, 'There is no user with such E-mail')
+
+        else:
+            uidb64 = urlsafe_base64_encode(force_bytes(user[0].pk))
+
+            domain = get_current_site(request).domain
+            link = reverse('set-new-password', kwargs={'uidb64': uidb64, 'token': PasswordResetTokenGenerator().make_token(user[0])})
+            reset_url = f'http://{domain}{link}'
+
+            reset_email_subject = 'YourExpenseManager password reset'
+            reset_email_body = f'''
+            Dear {user[0].username},
+
+            We received a request to reset the password for your account associated with YourExpenseManager.
+
+            Click on the following link to reset your password:
+            {reset_url}
+
+            You will be directed to a page where you can create a new password for your account.
+
+            Please note that this link is valid for a limited time for security reasons. If you did not request this password reset, you can safely ignore this email. Your account's security is important to us.
+
+            If you have any questions or need further assistance, please don't hesitate to send your questions to this e-mail adress.
+
+            Thank you for using YourExpenseManager!
+
+            Sincerely,
+            The YourExpenseManager Team
+            '''
+            reset_email = EmailMessage(
+                reset_email_subject,
+                reset_email_body,
+                'noreply@semycolon.com',
+                [email]
+            )
+            reset_email.send(fail_silently=False)
+
+            messages.success(request, 'The request has been processed, We have sent you an e-mail to reset your password')
+
+        return render(request, 'authentication/reset-password.html', context)
+
+
+class SetNewPassword(View):
+    def get(self, request, uidb64, token):
+        context = {
+            'uidb64': uidb64,
+            'token': token,
+        }
+
+        return render(request, 'authentication/set-new-password.html', context)
+
+    def post(self, request, uidb64, token):
+        context = {
+            'uidb64': uidb64,
+            'token': token,
+        }
+
+        return render(request, 'authentication/set-new-password.html', context)
