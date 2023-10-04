@@ -53,13 +53,14 @@ def add_expense(request):
 
     elif request.method == 'POST':
         amount = request.POST['amount']
-        category = request.POST['category']
-        description = request.POST['description']
-        date = request.POST['expense_date']
 
         if not amount:
             messages.error(request, 'Amount is required')
             return render(request, 'expenses/add-expense.html', context)
+
+        category = request.POST['category']
+        description = request.POST['description']
+        date = request.POST['expense_date']
 
         if not description:
             messages.error(request, 'Description is required')
