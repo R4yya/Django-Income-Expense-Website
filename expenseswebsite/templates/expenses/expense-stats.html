@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-10">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'expenses' %}">Expenses</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        My Expenses
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        Summary
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <canvas id="myChart" width="400" height="400"></canvas>
+    </div>
+</div>
+<script src="{% static 'js/expense_category_stat.js' %}"></script>
+{% endblock %}
