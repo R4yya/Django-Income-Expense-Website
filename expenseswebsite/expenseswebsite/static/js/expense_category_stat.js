@@ -1,5 +1,7 @@
+let delayed
+
 const renderChart = (data, labels) => {
-    const ctx1 = document.getElementById('myChart1');
+    const ctx1 = document.getElementById('categoryChart').getContext('2d');
 
     new Chart(ctx1, {
         type: 'doughnut',
@@ -9,66 +11,52 @@ const renderChart = (data, labels) => {
                 label: 'Amount',
                 data: data,
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(99, 255, 132, 0.2)',
+                    'rgba(197, 59, 92, 0.5)',
+                    'rgba(245,123,108, 0.5)',
+                    'rgba(251,175,105, 0.5)',
+                    'rgba(255,209,102, 0.5)',
+                    'rgba(131,212,131, 0.5)',
+                    'rgba(6,214,160, 0.5)',
+                    'rgba(12,176,169, 0.5)',
+                    'rgba(17,138,178, 0.5)',
+                    'rgba(7,59,76, 0.5)'
                 ],
                 borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(255, 99, 132, 1)'
+                    'rgba(197, 59, 92, 1)',
+                    'rgba(245,123,108, 1)',
+                    'rgba(251,175,105, 1)',
+                    'rgba(255,209,102, 1)',
+                    'rgba(131,212,131, 1)',
+                    'rgba(6,214,160, 1)',
+                    'rgba(12,176,169, 1)',
+                    'rgba(17,138,178, 1)',
+                    'rgba(7,59,76, 1)'
                 ],
-                borderWidth: 1,
+                borderWidth: 3,
                 hoverOffset: 10
             }]
         },
         options: {
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Expenses per category'
+            tension: 0.15,
+            responsive: false,
+            maintanAspectRatio: false,
+            animation: {
+                onComplete: () => {
+                    delayed = true;
                 },
-                subtitle: {
-                    display: true,
-                    text: 'Last 6 months',
-                    padding: {
-                        bottom: 10
+                delay: (context) => {
+                    let delay = 0;
+                    if (context.type === 'data' && context.mode === 'default' && !delayed) {
+                      delay = context.dataIndex * 100 + context.datasetIndex * 100;
                     }
+                    return delay;
                 },
-            }
-        }
-    });
-
-    const ctx2 = document.getElementById('myChart2');
-
-    new Chart(ctx2, {
-        type: 'doughnut',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Amount',
-                data: data,
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(99, 255, 132, 0.2)',
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(255, 99, 132, 1)'
-                ],
-                borderWidth: 1,
-                hoverOffset: 10
-            }]
-        },
-        options: {
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                },
+            },
             plugins: {
                 title: {
                     display: true,
@@ -76,7 +64,7 @@ const renderChart = (data, labels) => {
                 },
                 subtitle: {
                     display: true,
-                    text: 'Last 6 months',
+                    text: 'Last month',
                     padding: {
                         bottom: 10
                     }
@@ -88,7 +76,7 @@ const renderChart = (data, labels) => {
 
 const getChartData = () => {
     fetch('expense-category-summary')
-        .then(res=>res.json())
+        .then(res => res.json())
         .then(results => {
             const category_data = results.expense_category_data;
             const [lables, data] = [
@@ -101,3 +89,5 @@ const getChartData = () => {
 };
 
 document.onload = getChartData();
+
+
