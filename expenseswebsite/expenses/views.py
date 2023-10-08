@@ -288,5 +288,6 @@ def expense_card_summary(request):
     return JsonResponse({'expense_card_data': final_rep}, safe=False)
 
 
+@login_required(login_url='/authentication/login')
 def expense_stats(request):
     return render(request, 'expenses/expense-stats.html')
