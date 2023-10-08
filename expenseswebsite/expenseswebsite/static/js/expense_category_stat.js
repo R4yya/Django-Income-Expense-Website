@@ -1,5 +1,3 @@
-let delayed
-
 const renderChart = (data, labels) => {
     const ctx1 = document.getElementById('categoryChart').getContext('2d');
 
@@ -37,21 +35,7 @@ const renderChart = (data, labels) => {
             }]
         },
         options: {
-            tension: 0.15,
             responsive: false,
-            maintanAspectRatio: false,
-            animation: {
-                onComplete: () => {
-                    delayed = true;
-                },
-                delay: (context) => {
-                    let delay = 0;
-                    if (context.type === 'data' && context.mode === 'default' && !delayed) {
-                      delay = context.dataIndex * 100 + context.datasetIndex * 100;
-                    }
-                    return delay;
-                },
-            },
             scales: {
                 y: {
                     beginAtZero: true
