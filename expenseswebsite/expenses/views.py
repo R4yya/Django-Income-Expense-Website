@@ -194,5 +194,26 @@ def expense_month_summary(request):
     return JsonResponse({'expense_month_data': final_rep}, safe=False)
 
 
+def expense_year_summary(request):
+    todays_date = date.today()
+    first_day_of_current_year = todays_date.replace(month=1, day=1)
+    last_day_of_current_year = todays_date.replace(month=12, day=31)
+
+    expenses = Expense.objects.filter(
+        owner=request.user,
+        date__gte=first_day_of_current_year,
+        date__lte=last_day_of_current_year
+    )
+
+    month_names = [calendar.month_name[i] for i in range(1, 13)]
+    final_rep = {month: 0 for month in month_names}
+
+    for expense in expenses:
+        month_name = calendar.month_name[expense.date.month]
+        final_rep[month_name] += expense.amount
+
+    return JsonResponse({'expense_year_data': final_rep}, safe=False)
+
+
 def expense_stats(request):
     return render(request, 'expenses/expense-stats.html')
