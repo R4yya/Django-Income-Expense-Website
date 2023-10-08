@@ -154,12 +154,14 @@ def expense_category_summary(request):
         return amount
 
     todays_date = date.today()
-    six_months_ago = todays_date - timedelta(days=180)
+    first_day_of_current_month = todays_date.replace(day=1)
+    last_day_of_last_month = first_day_of_current_month - timedelta(days=1)
+    first_day_of_last_month = last_day_of_last_month.replace(day=1)
 
     expenses = Expense.objects.filter(
         owner=request.user,
-        date__gte=six_months_ago,
-        date__lte=todays_date
+        date__gte=first_day_of_last_month,
+        date__lte=last_day_of_last_month
     )
 
     final_rep = {}
