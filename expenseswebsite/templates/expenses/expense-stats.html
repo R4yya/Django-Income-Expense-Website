@@ -25,11 +25,13 @@
                 <div class="card-header">
                     TODAY
                     <span class="bage bg-secondary float-end px-2 rounded-1 text-black">
-                        1
+                        <span id="todayExpenseCount">0</span>
                     </span>
                 </div>
                 <div class="card-body my-2">
-                    <h5 class="card-title m-0 text-center">Summ</h5>
+                    <h5 class="card-title m-0 text-center">
+                        <span id="todayExpenseAmount">0</span>
+                    </h5>
                 </div>
             </div>
         </div>
@@ -38,11 +40,13 @@
                 <div class="card-header">
                     THIS WEEK
                     <span class="bage bg-secondary float-end px-2 rounded-1 text-black">
-                        1
+                        <span id="weekExpenseCount">0</span>
                     </span>
                 </div>
                 <div class="card-body my-2">
-                    <h5 class="card-title m-0 text-center">Summ</h5>
+                    <h5 class="card-title m-0 text-center">
+                        <span id="weekExpenseAmount">0</span>
+                    </h5>
                 </div>
             </div>
         </div>
@@ -51,11 +55,13 @@
                 <div class="card-header">
                     THIS MONTH
                     <span class="bage bg-secondary float-end px-2 rounded-1 text-black">
-                        1
+                        <span id="monthExpenseCount">0</span>
                     </span>
                 </div>
                 <div class="card-body my-2">
-                    <h5 class="card-title m-0 text-center">Summ</h5>
+                    <h5 class="card-title m-0 text-center">
+                        <span id="monthExpenseAmount">0</span>
+                    </h5>
                 </div>
             </div>
         </div>
@@ -64,20 +70,24 @@
                 <div class="card-header">
                     THIS YEAR
                     <span class="bage bg-secondary float-end px-2 rounded-1 text-black">
-                        1
+                        <span id="yearExpenseCount">0</span>
                     </span>
                 </div>
                 <div class="card-body my-2">
-                    <h5 class="card-title m-0 text-center">Summ</h5>
+                    <h5 class="card-title m-0 text-center">
+                        <span id="yearExpenseAmount">0</span>
+                    </h5>
                 </div>
             </div>
-
         </div>
-        <div class="row">
-            <canvas id="thisMonthChart" class="mb-5"></canvas>
-            <canvas id="thisYearChart" class="mb-5"></canvas>
-            </div>
     </div>
+    <div class="row">
+        <canvas id="thisWeekChart" class="mb-5"></canvas>
+        <canvas id="thisMonthChart" class="mb-5"></canvas>
+        <canvas id="thisYearChart" class="mb-5"></canvas>
+    </div>
+    
 </div>
 <script src="{% static 'js/expense_long_term_stat.js' %}"></script>
+<script src="{% static 'js/expense_card_stat.js' %}"></script>
 {% endblock %}
