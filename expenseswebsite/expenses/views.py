@@ -8,12 +8,13 @@ from userpreferences.models import UserPreference
 from .models import Category, Expense
 from json import loads
 from datetime import date, timedelta
+import calendar
 
 
 @login_required(login_url='/authentication/login')
 def index(request):
     expenses = Expense.objects.filter(owner=request.user)
-    paginator = Paginator(expenses, 5)
+    paginator = Paginator(expenses, 10)
     page_number = request.GET.get('page')
     page_obj = Paginator.get_page(paginator, page_number)
     currency = UserPreference.objects.get(user=request.user).currency
@@ -170,6 +171,27 @@ def expense_category_summary(request):
             final_rep[category] = get_value(category)
 
     return JsonResponse({'expense_category_data': final_rep}, safe=False)
+
+
+def expense_month_summary(request):
+    todays_date = date.today()
+    first_day_of_current_month = todays_date.replace(day=1)
+    last_day_of_current_month = (todays_date.replace(day=1) + timedelta(days=32)).replace(day=1) - timedelta(days=1)
+
+    expenses = Expense.objects.filter(
+        owner=request.user,
+        date__gte=first_day_of_current_month,
+        date__lte=last_day_of_current_month
+    )
+
+    num_days = last_day_of_current_month.day
+    final_rep = {str(i): 0 for i in range(1, num_days + 1)}
+
+    for expense in expenses:
+        day = str(expense.date.day)
+        final_rep[day] += expense.amount
+
+    return JsonResponse({'expense_month_data': final_rep}, safe=False)
 
 
 def expense_stats(request):
