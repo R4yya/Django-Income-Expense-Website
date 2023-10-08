@@ -1,9 +1,9 @@
 let delayed;
 
 const renderWeekChart = (data, labels) => {
-    const ctx1 = document.getElementById('thisWeekChart').getContext('2d');
+    const ctx = document.getElementById('thisWeekChart').getContext('2d');
 
-    new Chart(ctx1, {
+    new Chart(ctx, {
         type: 'line',
         data: {
             labels: labels,
@@ -54,9 +54,9 @@ const renderWeekChart = (data, labels) => {
 };
 
 const renderMonthChart = (data, labels) => {
-    const ctx1 = document.getElementById('thisMonthChart').getContext('2d');
+    const ctx = document.getElementById('thisMonthChart').getContext('2d');
 
-    new Chart(ctx1, {
+    new Chart(ctx, {
         type: 'line',
         data: {
             labels: labels,
@@ -107,9 +107,9 @@ const renderMonthChart = (data, labels) => {
 };
 
 const renderYearChart = (data, labels) => {
-    const ctx1 = document.getElementById('thisYearChart').getContext('2d');
+    const ctx = document.getElementById('thisYearChart').getContext('2d');
 
-    new Chart(ctx1, {
+    new Chart(ctx, {
         type: 'line',
         data: {
             labels: labels,
@@ -161,7 +161,7 @@ const renderYearChart = (data, labels) => {
 
 const getChartData = () => {
     fetch('expense-month-summary')
-        .then(res=>res.json())
+        .then(res => res.json())
         .then(results => {
             const month_data = results.expense_month_data;
             const [lables, data] = [
@@ -173,7 +173,7 @@ const getChartData = () => {
         });
 
     fetch('expense-year-summary')
-        .then(res=>res.json())
+        .then(res => res.json())
         .then(results => {
             const year_data = results.expense_year_data;
             const [lables, data] = [
@@ -185,7 +185,7 @@ const getChartData = () => {
         });
 
     fetch('expense-week-summary')
-        .then(res=>res.json())
+        .then(res => res.json())
         .then(results => {
             const week_data = results.expense_week_data;
             const [lables, data] = [
