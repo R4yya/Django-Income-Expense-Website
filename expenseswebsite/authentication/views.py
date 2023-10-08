@@ -13,6 +13,7 @@ from django.urls import reverse
 
 import json
 from .utils import account_activation_token
+from userpreferences.models import UserPreference
 from validate_email import validate_email
 import threading
 
@@ -49,6 +50,9 @@ class RegistrationView(View):
                 user.set_password(password)
                 user.is_active = False
                 user.save()
+
+                user_preferences = UserPreference(user=user)
+                user_preferences.save()
 
                 uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
 
