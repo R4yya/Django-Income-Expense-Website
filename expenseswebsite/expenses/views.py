@@ -173,6 +173,27 @@ def expense_category_summary(request):
     return JsonResponse({'expense_category_data': final_rep}, safe=False)
 
 
+def expense_week_summary(request):
+    todays_date = date.today()
+    current_week_start = todays_date - timedelta(days=todays_date.weekday())
+    current_week_end = current_week_start + timedelta(days=6)
+
+    expenses = Expense.objects.filter(
+        owner=request.user,
+        date__gte=current_week_start,
+        date__lte=current_week_end
+    )
+
+    days_of_week = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    final_rep = {day: 0 for day in days_of_week}
+
+    for expense in expenses:
+        day_of_week = expense.date.strftime('%a')
+        final_rep[day_of_week] += expense.amount
+
+    return JsonResponse({'expense_week_data': final_rep}, safe=False)
+
+
 def expense_month_summary(request):
     todays_date = date.today()
     first_day_of_current_month = todays_date.replace(day=1)
@@ -213,6 +234,58 @@ def expense_year_summary(request):
         final_rep[month_name] += expense.amount
 
     return JsonResponse({'expense_year_data': final_rep}, safe=False)
+
+
+def expense_card_summary(request):
+    def get_value(expenses):
+        count = 0
+        amount = 0
+
+        for expense in expenses:
+            amount += expense.amount
+            count += 1
+
+        return {'count': count, 'amount': amount}
+
+    todays_date = date.today()
+
+    current_week_start = todays_date - timedelta(days=todays_date.weekday())
+    current_week_end = current_week_start + timedelta(days=6)
+
+    first_day_of_current_month = todays_date.replace(day=1)
+    last_day_of_current_month = (todays_date.replace(day=1) + timedelta(days=32)).replace(day=1) - timedelta(days=1)
+
+    first_day_of_current_year = todays_date.replace(month=1, day=1)
+    last_day_of_current_year = todays_date.replace(month=12, day=31)
+
+    all_expenses = Expense.objects.filter(
+        owner=request.user,
+        date__gte=first_day_of_current_year,
+        date__lte=last_day_of_current_year
+    )
+
+    today_expenses = all_expenses.filter(
+        date=todays_date
+    )
+
+    week_expenses = all_expenses.filter(
+        date__gte=current_week_start,
+        date__lte=current_week_end
+    )
+
+    month_expenses = all_expenses.filter(
+        date__gte=first_day_of_current_month,
+        date__lte=last_day_of_current_month
+    )
+
+    final_rep = {
+        'today': get_value(today_expenses),
+        'week': get_value(week_expenses),
+        'month': get_value(month_expenses),
+        'year': get_value(all_expenses),
+    }
+
+    return JsonResponse({'expense_card_data': final_rep}, safe=False)
 
 
 def expense_stats(request):
