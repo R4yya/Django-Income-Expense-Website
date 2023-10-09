@@ -1,12 +1,14 @@
 from django.shortcuts import render
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 from .models import UserPreference
 from os import path
 from json import load
 
 
+@login_required(login_url='/authentication/login')
 def index(request):
     currency_data = []
 
@@ -19,12 +21,12 @@ def index(request):
 
     exists = UserPreference.objects.filter(user=request.user).exists()
     user_preferences = None
-    
+
     if exists:
         user_preferences = UserPreference.objects.get(user=request.user)
 
     if request.method == 'GET':
-    
+
         return render(request, 'preferences/index.html', {'currencies': currency_data, 'user_preferences': user_preferences})
 
     elif request.method == 'POST':
