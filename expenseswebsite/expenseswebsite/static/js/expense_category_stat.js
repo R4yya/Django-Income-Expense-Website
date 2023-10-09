@@ -36,11 +36,6 @@ const renderChart = (data, labels) => {
         },
         options: {
             responsive: false,
-            scales: {
-                y: {
-                    beginAtZero: true
-                },
-            },
             plugins: {
                 title: {
                     display: true,
