@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<div class="container mt-4 vh-100">
+<div class="container mt-4">
     <div class="row">
-        <div class="col-md-10">
+        <div class="col-md-12">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item active">
@@ -14,5 +14,27 @@
             </nav>
         </div>
     </div>
+    <div class="row mb-5">
+        <canvas id="categoryChart" style="
+        display: grid;
+        gap: 1em; grid-template-rows: min-content minmax(0, 1fr) min-content;
+        grid-template-columns: 1fr minmax(0, 3fr);
+        grid-template-areas: 'a h' 'a c' 'a f';
+        height: calc(100vh - 2em);
+        width: calc(100vw - 2em); margin: 1em;"></canvas>
+        <canvas id="sourceChart" style="
+        display: grid;
+        gap: 1em; grid-template-rows: min-content minmax(0, 1fr) min-content;
+        grid-template-columns: 1fr minmax(0, 3fr);
+        grid-template-areas: 'a h' 'a c' 'a f';
+        height: calc(100vh - 2em);
+        width: calc(100vw - 2em); margin: 1em;"></canvas>
+    </div>
+    <div class="row mb-5">
+        <canvas id="comparativeChart"></canvas>
+    </div>
 </div>
+<script src="{% static 'js/income_expense_stats.js' %}"></script>
+<script src="{% static 'js/comparative_stat.js' %}"></script>
+<script></script>
 {% endblock %}
