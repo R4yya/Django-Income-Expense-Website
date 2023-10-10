@@ -17,7 +17,7 @@
         </div>
         {% if income.count %}
         <div class="col-md-4">
-            <div class="form-group px-3">
+            <div class="form-group">
                 <input type="text" class="form-control form-control-sm px-3 h-100 rounded border-1" id="searchField" placeholder="Search">
             </div>
         </div>
@@ -29,46 +29,50 @@
         <div class="container mt-3">
             {% include 'partials/_messages.html' %}
         </div>
-        <div class="app-table">
-            <table class="table table-sm table-stripped table-hover align-middle">
-                <thead>
-                    <tr>
-                        <th>Amount ({{currency}})</th>
-                        <th>Source</th>
-                        <th>Description</th>
-                        <th>Date</th>
-                        <th>Options</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for income in page_obj %}
-                    <tr class="text-nowrap">
-                        <td>{{income.amount}}</td>
-                        <td>{{income.source}}</td>
-                        <td>{{income.description}}</td>
-                        <td>{{income.date}}</td>
-                        <td >
-                            <a href="{% url 'edit-income' income.id %}" class="btn btn-sm btn-info px-2 py-1 rounded-start">Edit</a>
-                            <a href="{% url 'delete-income' income.id %}" class="btn btn-sm btn-danger  px-2 py-1 rounded-end">Delete</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        <div class="table-responsive">
+            <div class="app-table">
+                <table class="table table-sm table-stripped table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>Amount ({{currency}})</th>
+                            <th>Source</th>
+                            <th>Description</th>
+                            <th>Date</th>
+                            <th>Options</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for income in page_obj %}
+                        <tr class="text-nowrap">
+                            <td>{{income.amount}}</td>
+                            <td>{{income.source}}</td>
+                            <td>{{income.description}}</td>
+                            <td>{{income.date}}</td>
+                            <td >
+                                <a href="{% url 'edit-income' income.id %}" class="btn btn-sm btn-info px-2 py-1 rounded-start">Edit</a>
+                                <a href="{% url 'delete-income' income.id %}" class="btn btn-sm btn-danger  px-2 py-1 rounded-end">Delete</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
         <p class="no-results" style="display: none;">No results found</p>
-        <div class="table-output">
-            <table class="table table-sm table-stripped table-hover">
-                <thead>
-                    <tr>
-                        <th>Amount ({{currency}})</th>
-                        <th>Source</th>
-                        <th>Description</th>
-                        <th>Date</th>
-                    </tr>
-                </thead>
-                <tbody class="table-body"></tbody>
-            </table>
+        <div class="table-responsive">
+            <div class="table-output">
+                <table class="table table-sm table-stripped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Amount ({{currency}})</th>
+                            <th>Source</th>
+                            <th>Description</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-body"></tbody>
+                </table>
+            </div>
         </div>
         <div class="pagination-container">
             <div class="container px-0">
