@@ -11,18 +11,18 @@
             </li>
         </ol>
     </nav>
-    <div class="card">
-        <div class="card-body py-3 ">
+    <div class="card rounded">
+        <div class="card-body py-3">
             <form action="{% url 'add-expense' %}" method="post">
                 {% include 'partials/_messages.html' %}
                 {% csrf_token %}
                 <div class="from-group mb-3">
                     <label for="">Amount</label>
-                    <input name="amount" type="number" class="form-control form-control-sm" value="{{values.amount}}">
+                    <input name="amount" type="number" class="form-control form-control-sm rounded border-1" value="{{values.amount}}">
                 </div>
                 <div class="from-group mb-3">
                     <label for="">Category</label>
-                    <select name="category" id="" class="form-control form-control-sm">
+                    <select name="category" id="" class="form-control form-control-sm rounded border-1">
                         {% for category in categories %}
                         <option name="category" value="{{category.name}}">{{category.name}}</option>
                         {% endfor %}
@@ -30,13 +30,13 @@
                 </div>
                 <div class="from-group mb-3">
                     <label for="">Description</label>
-                    <input name="description" type="text" class="form-control form-control-sm" value="{{values.description}}">
+                    <input name="description" type="text" class="form-control form-control-sm rounded border-1" value="{{values.description}}">
                 </div>
                 <div class="from-group mb-3">
                     <label for="">Date</label>
-                    <input name="expense_date" type="date" class="form-control form-control-sm" value="{{values.expense_date}}">
+                    <input name="expense_date" type="date" class="form-control form-control-sm rounded border-1" value="{{values.expense_date}}">
                 </div>
-                <input type="submit" value="Save" class="btn btn-outline-success float-end">
+                <input type="submit" value="Save" class="btn btn-outline-success float-end rounded p-0 py-2 px-4">
             </form>
         </div>
     </div>
