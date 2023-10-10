@@ -8,7 +8,7 @@
         {% csrf_token %}
         
         <div class="input-group">
-          <select name="currency" class="form-select" id="inputGroupSelect03" aria-label="Example select with button addon">
+          <select name="currency" class="form-select border-1 rounded-start" id="inputGroupSelect03" aria-label="Example select with button addon">
             {% if user_preferences.currency %}
             <option name="currency" selected value="{{user_preferences.currency}}">{{ user_preferences.currency}}</option>
             {% else %}
@@ -20,7 +20,7 @@
             </option>
             {% endfor %}
           </select>
-          <input class="btn btn-primary" type="submit" value="Save">
+          <input class="btn btn-primary rounded-end" type="submit" value="Save">
         </div>
     </form>
 </div>
