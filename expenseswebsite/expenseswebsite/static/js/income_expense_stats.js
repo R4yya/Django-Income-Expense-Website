@@ -43,7 +43,7 @@ const renderCategoryChart = (data, labels) => {
                 },
                 subtitle: {
                     display: true,
-                    text: 'Last month',
+                    text: 'This month',
                     padding: {
                         bottom: 10
                     }
@@ -98,7 +98,7 @@ const renderIncomeChart = (data, labels) => {
                 },
                 subtitle: {
                     display: true,
-                    text: 'Last month',
+                    text: 'This month',
                     padding: {
                         bottom: 10
                     }
