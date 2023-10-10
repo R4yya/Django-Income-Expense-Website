@@ -19,7 +19,7 @@ searchField.addEventListener("keyup", (e) => {
 
         tableBody.innerHTML = "";
 
-        fetch("/search-expense", {
+        fetch("search-expense", {
             body: JSON.stringify({searchText: searchValue}),
             method: "POST"
         })
