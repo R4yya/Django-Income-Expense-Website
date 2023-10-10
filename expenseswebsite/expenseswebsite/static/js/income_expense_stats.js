@@ -109,7 +109,7 @@ const renderIncomeChart = (data, labels) => {
 };
 
 const getChartsData = () => {
-    fetch('expense-category-summary')
+    fetch('dahsboard-expense-category-summary')
         .then(res => res.json())
         .then(results => {
             const category_data = results.expense_category_data;
@@ -121,7 +121,7 @@ const getChartsData = () => {
             renderCategoryChart(data, lables);
     });
 
-    fetch('/income/income-source-summary')
+    fetch('dahsboard-income-source-summary')
         .then(res => res.json())
         .then(results => {
             const source_data = results.income_source_data;
