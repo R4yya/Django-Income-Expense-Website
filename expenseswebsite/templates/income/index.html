@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container mt-4">
     <div class="row">
-        <div class="col-md-10">
+        <div class="col-md-7">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
@@ -15,22 +15,19 @@
                 </ol>
             </nav>
         </div>
-        <div class="col-md-2">
-            <a href="{% url 'add-income' %} " class="btn btn-sm btn-success float-end text-nowrap">Add Income</a>
+        {% if income.count %}
+        <div class="col-md-4">
+            <div class="form-group px-3">
+                <input type="text" class="form-control form-control-sm px-3 h-100 rounded border-1" id="searchField" placeholder="Search">
+            </div>
+        </div>
+        <div class="col-md-1">
+            <a href="{% url 'add-income' %} " class="btn btn-sm btn-success float-end text-nowrap rounded">Add Income</a>
         </div>
     </div>
     <div class="container px-0">
         <div class="container mt-3">
             {% include 'partials/_messages.html' %}
-        </div>
-        {% if income.count %}
-        <div class="row my-3">
-            <div class="col-md-7"></div>
-            <div class="col-md-5">
-                <div class="form-group">
-                    <input type="text" class="form-control form-control-sm " id="searchField" placeholder="Search">
-                </div>
-            </div>
         </div>
         <div class="app-table">
             <table class="table table-sm table-stripped table-hover align-middle">
@@ -51,8 +48,8 @@
                         <td>{{income.description}}</td>
                         <td>{{income.date}}</td>
                         <td >
-                            <a href="{% url 'edit-income' income.id %}" class="btn btn-sm btn-info">Edit</a>
-                            <a href="{% url 'delete-income' income.id %}" class="btn btn-sm btn-danger">Delete</a>
+                            <a href="{% url 'edit-income' income.id %}" class="btn btn-sm btn-info px-2 py-1 rounded-start">Edit</a>
+                            <a href="{% url 'delete-income' income.id %}" class="btn btn-sm btn-danger  px-2 py-1 rounded-end">Delete</a>
                         </td>
                     </tr>
                     {% endfor %}
