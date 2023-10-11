@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="col-md-1">
-            <a href="{% url 'add-income' %} " class="btn btn-sm btn-success float-end text-nowrap rounded">Add Income</a>
+            <a href="{% url 'add-income' %} " class="btn btn-sm btn-success float-end text-nowrap rounded p-0 px-2 py-2">Add Income</a>
         </div>
     </div>
     <div class="container px-0">
@@ -50,7 +50,7 @@
                             <td>{{income.date}}</td>
                             <td>
                                 <a href="{% url 'edit-income' income.id %}" class="btn btn-sm btn-info px-2 py-1 rounded-start">Edit</a>
-                                <a href="{% url 'delete-income' income.id %}" class="btn btn-sm btn-danger  px-2 py-1 rounded-end">Delete</a>
+                                <a href="{% url 'delete-income' income.id %}" class="btn btn-sm btn-danger px-2 py-1 rounded-end">Delete</a>
                             </td>
                         </tr>
                         {% endfor %}
