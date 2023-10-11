@@ -35,8 +35,8 @@ const renderCategoryChart = () => {
                         'rgba(17,138,178, 1)',
                         'rgba(7,59,76, 1)'
                     ],
-                borderWidth: 3,
-                hoverOffset: 10
+                borderWidth: 2,
+                hoverOffset: 3
                 }]
             };
 
