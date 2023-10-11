@@ -48,7 +48,7 @@
                             <td>{{expense.category}}</td>
                             <td>{{expense.description}}</td>
                             <td>{{expense.date}}</td>
-                            <td >
+                            <td>
                                 <a href="{% url 'edit-expense' expense.id %}" class="btn btn-sm btn-info px-2 py-1 rounded-start">Edit</a>
                                 <a href="{% url 'delete-expense' expense.id %}" class="btn btn-sm btn-danger px-2 py-1 rounded-end">Delete</a>
                             </td>
