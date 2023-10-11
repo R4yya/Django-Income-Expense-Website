@@ -10,62 +10,62 @@ const renderExpenseWeekChart = () => {
                 Object.values(week_data)
             ];
 
-        const expense_week_chart_data = {
-            labels: expense_week_lables,
-            datasets: [{
-                label: 'This week',
+            const expense_week_chart_data = {
+                labels: expense_week_lables,
+                datasets: [{
+                    label: 'This week',
 
-                data: expenses_week_data,
+                    data: expenses_week_data,
 
-                backgroundColor: [
-                    'rgba(4, 110, 72, 0.2)',
-                ],
+                    backgroundColor: [
+                        'rgba(4, 110, 72, 0.2)',
+                    ],
 
-                borderColor: [
-                    'rgba(4, 110, 72, 1)',
-                ],
-                borderWidth: 1,
+                    borderColor: [
+                        'rgba(4, 110, 72, 1)',
+                    ],
+                    borderWidth: 1,
 
-                fill: 'start',
+                    fill: 'start',
 
-                pointStyle: 'circle',
-                pointBackgroundColor:[
-                    'rgba(4, 110, 72, 1)',
-                ]
-            }]
-        };
+                    pointStyle: 'circle',
+                    pointBackgroundColor:[
+                        'rgba(4, 110, 72, 1)',
+                    ]
+                }]
+            };
 
-        const expense_week_chart_config = {
-            type: 'line',
-            data: expense_week_chart_data,
-            options: {
-                tension: 0.15,
-                responsive: false,
-                animation: {
-                    onComplete: () => {
-                        delayed = true;
+            const expense_week_chart_config = {
+                type: 'line',
+                data: expense_week_chart_data,
+                options: {
+                    tension: 0.15,
+                    responsive: false,
+                    animation: {
+                        onComplete: () => {
+                            delayed = true;
+                        },
+                        delay: (context) => {
+                            let delay = 0;
+                            if (context.type === 'data' && context.mode === 'default' && !delayed) {
+                              delay = context.dataIndex * 100 + context.datasetIndex * 100;
+                            }
+                            return delay;
+                        },
                     },
-                    delay: (context) => {
-                        let delay = 0;
-                        if (context.type === 'data' && context.mode === 'default' && !delayed) {
-                          delay = context.dataIndex * 100 + context.datasetIndex * 100;
-                        }
-                        return delay;
-                    },
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        },
+                    }
                 }
-            }
-        };
+            };
 
-        const expenseWeekChart = new Chart(
-            document.getElementById('expenseThisWeekChart'),
-            expense_week_chart_config
-        );
-    });
+            const expenseWeekChart = new Chart(
+                document.getElementById('expenseThisWeekChart'),
+                expense_week_chart_config
+            );
+        });
 };
 
 const renderExpenseMonthChart = () => {
@@ -78,62 +78,62 @@ const renderExpenseMonthChart = () => {
                 Object.values(month_data)
             ];
 
-        const expense_month_chart_data = {
-            labels: expense_month_lables,
-            datasets: [{
-                label: 'This month',
+            const expense_month_chart_data = {
+                labels: expense_month_lables,
+                datasets: [{
+                    label: 'This month',
 
-                data: expenses_month_data,
+                    data: expenses_month_data,
 
-                backgroundColor: [
-                    'rgba(2, 42, 83, 0.2)',
-                ],
+                    backgroundColor: [
+                        'rgba(2, 42, 83, 0.2)',
+                    ],
 
-                borderColor: [
-                    'rgba(2, 42, 83, 1)',
-                ],
-                borderWidth: 1,
+                    borderColor: [
+                        'rgba(2, 42, 83, 1)',
+                    ],
+                    borderWidth: 1,
 
-                fill: 'start',
+                    fill: 'start',
 
-                pointStyle: 'circle',
-                pointBackgroundColor:[
-                    'rgba(2, 42, 83, 1)',
-                ]
-            }]
-        };
+                    pointStyle: 'circle',
+                    pointBackgroundColor:[
+                        'rgba(2, 42, 83, 1)',
+                    ]
+                }]
+            };
 
-        const expense_month_chart_config = {
-            type: 'line',
-            data: expense_month_chart_data,
-            options: {
-                tension: 0.15,
-                responsive: false,
-                animation: {
-                    onComplete: () => {
-                        delayed = true;
+            const expense_month_chart_config = {
+                type: 'line',
+                data: expense_month_chart_data,
+                options: {
+                    tension: 0.15,
+                    responsive: false,
+                    animation: {
+                        onComplete: () => {
+                            delayed = true;
+                        },
+                        delay: (context) => {
+                            let delay = 0;
+                            if (context.type === 'data' && context.mode === 'default' && !delayed) {
+                              delay = context.dataIndex * 100 + context.datasetIndex * 100;
+                            }
+                            return delay;
+                        },
                     },
-                    delay: (context) => {
-                        let delay = 0;
-                        if (context.type === 'data' && context.mode === 'default' && !delayed) {
-                          delay = context.dataIndex * 100 + context.datasetIndex * 100;
-                        }
-                        return delay;
-                    },
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        },
+                    }
                 }
-            }
-        };
+            };
 
-        const expenseMonthChart = new Chart(
-            document.getElementById('expenseThisMonthChart'),
-            expense_month_chart_config
-        );
-    });
+            const expenseMonthChart = new Chart(
+                document.getElementById('expenseThisMonthChart'),
+                expense_month_chart_config
+            );
+        });
 };
 
 const renderExpenseYearChart = () => {
