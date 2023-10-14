@@ -79,11 +79,33 @@
         </div>
     </div>
     <div class="row">
-        <canvas id="expenseThisWeekChart" class="mb-5"></canvas>
-        <canvas id="expenseThisMonthChart" class="mb-5"></canvas>
-        <canvas id="expenseThisYearChart" class="mb-5"></canvas>
+        <div id="expenseStatsCarousel" class="carousel carousel-dark slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <a type="button" data-bs-target="#expenseStatsCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></a>
+                <a type="button" data-bs-target="#expenseStatsCarousel" data-bs-slide-to="1" aria-label="Slide 2"></a>
+                <a type="button" data-bs-target="#expenseStatsCarousel" data-bs-slide-to="2" aria-label="Slide 3"></a>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item item-1 active">
+                    <canvas id="expenseThisWeekChart" class="d-block w-100 mb-5"></canvas>
+                </div>
+                <div class="carousel-item item-2">
+                    <canvas id="expenseThisMonthChart" class="d-block w-100 mb-5"></canvas>
+                </div>
+                <div class="carousel-item item-3">
+                    <canvas id="expenseThisYearChart" class="d-block w-100 mb-5"></canvas>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#expenseStatsCarousel" role="button" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#expenseStatsCarousel" role="button" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </a>
+        </div>
     </div>
-    
 </div>
 <script src="{% static 'js/expense_long_term_stat.js' %}"></script>
 <script src="{% static 'js/expense_card_stat.js' %}"></script>
