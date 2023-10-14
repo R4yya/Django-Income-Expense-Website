@@ -61,10 +61,14 @@ const renderIncomeWeekChart = () => {
                 }
             };
 
-            const incomeWeekChart = new Chart(
-                document.getElementById('incomeThisWeekChart'),
-                income_week_chart_config
-            );
+            const canvasWeekElement = document.getElementById('incomeThisWeekChart');
+
+            if (canvasWeekElement) {
+                const incomeWeekChart = new Chart(
+                    document.getElementById('incomeThisWeekChart'),
+                    income_week_chart_config
+                );
+            };
         });
 };
 
@@ -129,10 +133,14 @@ const renderIncomeMonthChart = () => {
                 }
             };
 
-            const incomeMonthChart = new Chart(
-                document.getElementById('incomeThisMonthChart'),
-                income_month_chart_config
-            );
+            const canvasMonthElement = document.getElementById('incomeThisMonthChart');
+
+            if (canvasMonthElement) {
+                const incomeMonthChart = new Chart(
+                    document.getElementById('incomeThisMonthChart'),
+                    income_month_chart_config
+                );
+            };
         });
 };
 
@@ -197,10 +205,14 @@ const renderIncomeYearChart = () => {
                 }
             };
 
-            const incomeYearChart = new Chart(
-                document.getElementById('incomeThisYearChart'),
-                income_year_chart_config
-            );
+            const canvasYearElement = document.getElementById('incomeThisYearChart');
+
+            if (canvasYearElement) {
+                const incomeYearChart = new Chart(
+                    document.getElementById('incomeThisYearChart'),
+                    income_year_chart_config
+                );
+            };
         });
 };
 
@@ -211,3 +223,17 @@ const renderLongTermCharts = () => {
 };
 
 document.onload = renderLongTermCharts();
+
+function resetChart() {
+    $('canvas').remove();
+
+    $('.carousel-item.item-1.active').prepend('<canvas id="incomeThisWeekChart" class="d-block w-100 mb-5"></canvas>');
+    $('.carousel-item.item-2.active').prepend('<canvas id="incomeThisMonthChart" class="d-block w-100 mb-5"></canvas>');
+    $('.carousel-item.item-3.active').prepend('<canvas id="incomeThisYearChart" class="d-block w-100 mb-5"></canvas>');
+
+    renderLongTermCharts();
+}
+
+$('#incomeStatsCarousel').on('slid.bs.carousel', function () {
+    resetChart();
+});
