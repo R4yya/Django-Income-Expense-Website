@@ -61,10 +61,14 @@ const renderExpenseWeekChart = () => {
                 }
             };
 
-            const expenseWeekChart = new Chart(
-                document.getElementById('expenseThisWeekChart'),
-                expense_week_chart_config
-            );
+            const canvasWeekElement = document.getElementById('expenseThisWeekChart');
+
+            if (canvasWeekElement) {
+                const expenseWeekChart = new Chart(
+                    document.getElementById('expenseThisWeekChart'),
+                    expense_week_chart_config
+                );
+            };
         });
 };
 
@@ -129,10 +133,14 @@ const renderExpenseMonthChart = () => {
                 }
             };
 
-            const expenseMonthChart = new Chart(
-                document.getElementById('expenseThisMonthChart'),
-                expense_month_chart_config
-            );
+            const canvasMonthElement = document.getElementById('expenseThisMonthChart');
+
+            if (canvasMonthElement) {
+                const expenseMonthChart = new Chart(
+                    document.getElementById('expenseThisMonthChart'),
+                    expense_month_chart_config
+                );
+            };
         });
 };
 
@@ -197,10 +205,14 @@ const renderExpenseYearChart = () => {
                 }
             };
 
-            const expenseYearChart = new Chart(
-                document.getElementById('expenseThisYearChart'),
-                expense_year_chart_config
-            );
+            const canvasYearElement = document.getElementById('expenseThisYearChart');
+
+            if (canvasYearElement) {
+                const expenseYearChart = new Chart(
+                    document.getElementById('expenseThisYearChart'),
+                    expense_year_chart_config
+                );
+            };
         });
 };
 
@@ -211,3 +223,17 @@ const renderLongTermCharts = () => {
 };
 
 document.onload = renderLongTermCharts();
+
+function resetChart() {
+    $('canvas').remove();
+
+    $('.carousel-item.item-1.active').prepend('<canvas id="expenseThisWeekChart" class="d-block w-100 mb-5"></canvas>');
+    $('.carousel-item.item-2.active').prepend('<canvas id="expenseThisMonthChart" class="d-block w-100 mb-5"></canvas>');
+    $('.carousel-item.item-3.active').prepend('<canvas id="expenseThisYearChart" class="d-block w-100 mb-5"></canvas>');
+
+    renderLongTermCharts();
+}
+
+$('#expenseStatsCarousel').on('slid.bs.carousel', function () {
+    resetChart();
+});
