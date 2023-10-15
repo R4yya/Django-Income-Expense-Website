@@ -16,18 +16,15 @@ const getCardData = () => {
     fetch('expense-card-summary')
         .then(res => res.json())
         .then(results => {
+            var placeholders = document.querySelectorAll(".placeholder");
+
+            placeholders.forEach(function(placeholder) {
+                placeholder.classList.remove("placeholder");
+                placeholder.classList.remove("placeholder-wave");
+                placeholder.classList.remove("w-100");
+            });
             updateCardData(results.expense_card_data);
         });
 };
 
 document.onload = getCardData();
-
-document.addEventListener("DOMContentLoaded", function() {
-    var placeholders = document.querySelectorAll(".placeholder");
-
-    placeholders.forEach(function(placeholder) {
-        placeholder.classList.remove("placeholder");
-        placeholder.classList.remove("placeholder-wave");
-        placeholder.classList.remove("w-100");
-    });
-});
