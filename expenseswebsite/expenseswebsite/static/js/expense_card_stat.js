@@ -21,3 +21,13 @@ const getCardData = () => {
 };
 
 document.onload = getCardData();
+
+document.addEventListener("DOMContentLoaded", function() {
+    var placeholders = document.querySelectorAll(".placeholder");
+
+    placeholders.forEach(function(placeholder) {
+        placeholder.classList.remove("placeholder");
+        placeholder.classList.remove("placeholder-wave");
+        placeholder.classList.remove("w-100");
+    });
+});
