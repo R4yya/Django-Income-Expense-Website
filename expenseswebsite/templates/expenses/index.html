@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<div class="container mt-4">
+<div class="container mt-4 vh-100">
     <div class="row">
         <div class="col-md-7">
             <nav aria-label="breadcrumb">
@@ -101,16 +101,6 @@
         <p class="text-center" style="font-size: 24px;">There is no expenses</p>
         {% endif %}
     </div>
-    <div class="row mb-5">
-        <canvas id="categoryChart" style="
-            display: grid;
-            gap: 1em; grid-template-rows: min-content minmax(0, 1fr) min-content;
-            grid-template-columns: 1fr minmax(0, 3fr);
-            grid-template-areas: 'a h' 'a c' 'a f';
-            height: calc(100vh - 2em);
-            width: calc(100vw - 2em); margin: 1em;"></canvas>
-    </div>
 </div>
 <script src="{% static 'js/search_expenses.js' %}"></script>
-<script src="{% static 'js/expense_category_stat.js' %}"></script>
 {% endblock %}
