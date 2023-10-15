@@ -16,6 +16,13 @@ const getCardData = () => {
     fetch('/income/income-card-summary')
         .then(res => res.json())
         .then(results => {
+            var placeholders = document.querySelectorAll(".placeholder");
+
+            placeholders.forEach(function(placeholder) {
+                placeholder.classList.remove("placeholder");
+                placeholder.classList.remove("placeholder-wave");
+                placeholder.classList.remove("w-100");
+            });
             updateCardData(results.income_card_data);
         });
 };
