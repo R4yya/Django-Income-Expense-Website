@@ -14,7 +14,7 @@ import calendar
 @login_required(login_url='/authentication/login')
 def index(request):
     expenses = Expense.objects.filter(owner=request.user)
-    paginator = Paginator(expenses, 5)
+    paginator = Paginator(expenses, 10)
     page_number = request.GET.get('page')
     page_obj = Paginator.get_page(paginator, page_number)
     currency = UserPreference.objects.get(user=request.user).currency
@@ -137,42 +137,6 @@ def delete_expense(request, id):
     messages.success(request, 'Expense removed successfully')
 
     return redirect('expenses')
-
-
-def expense_category_summary(request):
-    def get_category(expense):
-        return expense.category
-
-    def get_value(category):
-        amount = 0
-
-        filtered_by_category = expenses.filter(category=category)
-
-        for item in filtered_by_category:
-            amount += item.amount
-
-        return amount
-
-    todays_date = date.today()
-    first_day_of_current_month = todays_date.replace(day=1)
-    last_day_of_last_month = first_day_of_current_month - timedelta(days=1)
-    first_day_of_last_month = last_day_of_last_month.replace(day=1)
-
-    expenses = Expense.objects.filter(
-        owner=request.user,
-        date__gte=first_day_of_last_month,
-        date__lte=last_day_of_last_month
-    )
-
-    final_rep = {}
-
-    category_list = list(set(map(get_category, expenses)))
-
-    for expense in expenses:
-        for category in category_list:
-            final_rep[category] = get_value(category)
-
-    return JsonResponse({'expense_category_data': final_rep}, safe=False)
 
 
 def expense_week_summary(request):
