@@ -44,7 +44,7 @@ const renderCategoryChart = () => {
                 type: 'doughnut',
                 data: category_chart_data,
                 options: {
-                    responsive: false,
+                    responsive: true,
                     plugins: {
                         title: {
                             display: true,
