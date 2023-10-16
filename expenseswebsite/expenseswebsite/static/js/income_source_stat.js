@@ -44,7 +44,7 @@ const renderSourceChart = () => {
                 type: 'doughnut',
                 data: income_chart_data,
                 options: {
-                    responsive: false,
+                    responsive: true,
                     plugins: {
                         title: {
                             display: true,
