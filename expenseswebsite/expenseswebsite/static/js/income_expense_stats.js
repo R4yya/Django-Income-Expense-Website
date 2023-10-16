@@ -44,8 +44,8 @@ const renderSourceChart = () => {
                 type: 'doughnut',
                 data: source_chart_data,
                 options: {
-                    responsive: false,
-                    radius: '95%',
+                    responsive: true,
+                    radius: '90%',
                     plugins: {
                         title: {
                             display: true,
@@ -121,8 +121,8 @@ const renderCategoryChart = () => {
                 type: 'doughnut',
                 data: category_chart_data,
                 options: {
-                    responsive: false,
-                    radius: '95%',
+                    responsive: true,
+                    radius: '90%',
                     plugins: {
                         title: {
                             display: true,
