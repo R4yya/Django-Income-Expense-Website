@@ -41,3 +41,8 @@ def index(request):
         messages.success(request, 'Changes saved successfully')
 
         return render(request, 'preferences/index.html', {'currencies': currency_data, 'user_preferences': user_preferences})
+
+
+@login_required(login_url='/authentication/login')
+def account_preferences(request):
+    return render(request, 'preferences/account.html')
