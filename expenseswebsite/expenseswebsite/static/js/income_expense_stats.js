@@ -1,137 +1,158 @@
-const renderCategoryChart = (data, labels) => {
-    const ctx = document.getElementById('categoryChart').getContext('2d');
-
-    new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Amount',
-                data: data,
-                backgroundColor: [
-                    'rgba(197, 59, 92, 0.5)',
-                    'rgba(245,123,108, 0.5)',
-                    'rgba(251,175,105, 0.5)',
-                    'rgba(255,209,102, 0.5)',
-                    'rgba(131,212,131, 0.5)',
-                    'rgba(6,214,160, 0.5)',
-                    'rgba(12,176,169, 0.5)',
-                    'rgba(17,138,178, 0.5)',
-                    'rgba(7,59,76, 0.5)'
-                ],
-                borderColor: [
-                    'rgba(197, 59, 92, 1)',
-                    'rgba(245,123,108, 1)',
-                    'rgba(251,175,105, 1)',
-                    'rgba(255,209,102, 1)',
-                    'rgba(131,212,131, 1)',
-                    'rgba(6,214,160, 1)',
-                    'rgba(12,176,169, 1)',
-                    'rgba(17,138,178, 1)',
-                    'rgba(7,59,76, 1)'
-                ],
-                borderWidth: 3,
-                hoverOffset: 10
-            }]
-        },
-        options: {
-            responsive: false,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Expenses per category'
-                },
-                subtitle: {
-                    display: true,
-                    text: 'This month',
-                    padding: {
-                        bottom: 10
-                    }
-                },
-            }
-        }
-    });
-};
-
-const renderIncomeChart = (data, labels) => {
-    const ctx = document.getElementById('sourceChart').getContext('2d');
-
-    new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Amount',
-                data: data,
-                backgroundColor: [
-                    'rgba(197, 59, 92, 0.5)',
-                    'rgba(245,123,108, 0.5)',
-                    'rgba(251,175,105, 0.5)',
-                    'rgba(255,209,102, 0.5)',
-                    'rgba(131,212,131, 0.5)',
-                    'rgba(6,214,160, 0.5)',
-                    'rgba(12,176,169, 0.5)',
-                    'rgba(17,138,178, 0.5)',
-                    'rgba(7,59,76, 0.5)'
-                ],
-                borderColor: [
-                    'rgba(197, 59, 92, 1)',
-                    'rgba(245,123,108, 1)',
-                    'rgba(251,175,105, 1)',
-                    'rgba(255,209,102, 1)',
-                    'rgba(131,212,131, 1)',
-                    'rgba(6,214,160, 1)',
-                    'rgba(12,176,169, 1)',
-                    'rgba(17,138,178, 1)',
-                    'rgba(7,59,76, 1)'
-                ],
-                borderWidth: 3,
-                hoverOffset: 10
-            }]
-        },
-        options: {
-            responsive: false,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Income per source'
-                },
-                subtitle: {
-                    display: true,
-                    text: 'This month',
-                    padding: {
-                        bottom: 10
-                    }
-                },
-            }
-        }
-    });
-};
-
-const getChartsData = () => {
-    fetch('dahsboard-expense-category-summary')
-        .then(res => res.json())
-        .then(results => {
-            const category_data = results.expense_category_data;
-            const [lables, data] = [
-                Object.keys(category_data),
-                Object.values(category_data)
-            ];
-
-            renderCategoryChart(data, lables);
-    });
-
+const renderSourceChart = () => {
     fetch('dahsboard-income-source-summary')
         .then(res => res.json())
         .then(results => {
             const source_data = results.income_source_data;
-            const [lables, data] = [
+            const [income_lables, income_data] = [
                 Object.keys(source_data),
                 Object.values(source_data)
             ];
 
-            renderIncomeChart(data, lables);
-    });
+            const source_chart_data = {
+                labels: income_lables,
+                datasets: [{
+                    label: 'Amount',
+                    data: income_data,
+                    backgroundColor: [
+                        'rgba(197, 59, 92, 0.5)',
+                        'rgba(245,123,108, 0.5)',
+                        'rgba(251,175,105, 0.5)',
+                        'rgba(255,209,102, 0.5)',
+                        'rgba(131,212,131, 0.5)',
+                        'rgba(6,214,160, 0.5)',
+                        'rgba(12,176,169, 0.5)',
+                        'rgba(17,138,178, 0.5)',
+                        'rgba(7,59,76, 0.5)'
+                    ],
+                    borderColor: [
+                        'rgba(197, 59, 92, 1)',
+                        'rgba(245,123,108, 1)',
+                        'rgba(251,175,105, 1)',
+                        'rgba(255,209,102, 1)',
+                        'rgba(131,212,131, 1)',
+                        'rgba(6,214,160, 1)',
+                        'rgba(12,176,169, 1)',
+                        'rgba(17,138,178, 1)',
+                        'rgba(7,59,76, 1)'
+                    ],
+                    borderWidth: 1,
+                    hoverOffset: 30
+                }]
+            };
+
+            const source_chart_config = {
+                type: 'doughnut',
+                data: source_chart_data,
+                options: {
+                    responsive: false,
+                    radius: '95%',
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Income per source'
+                        },
+                        subtitle: {
+                            display: true,
+                            text: 'This month',
+                            padding: {
+                                bottom: 10
+                            }
+                        }
+                    }
+                }
+            };
+
+            const canvasSourceElement = document.getElementById('sourceChart');
+
+            if (canvasSourceElement) {
+                const sourceChart = new Chart(
+                    document.getElementById('sourceChart'),
+                    source_chart_config
+                );
+            };
+        });
+
+    
 };
 
-document.onload = getChartsData();
+const renderCategoryChart = () => {
+    fetch('dahsboard-expense-category-summary')
+        .then(res => res.json())
+        .then(results => {
+            const category_data = results.expense_category_data;
+            const [expense_lables, expense_data] = [
+                Object.keys(category_data),
+                Object.values(category_data)
+            ];
+
+            const category_chart_data = {
+                labels: expense_lables,
+                datasets: [{
+                    label: 'Amount',
+                    data: expense_data,
+                    backgroundColor: [
+                        'rgba(197, 59, 92, 0.5)',
+                        'rgba(245,123,108, 0.5)',
+                        'rgba(251,175,105, 0.5)',
+                        'rgba(255,209,102, 0.5)',
+                        'rgba(131,212,131, 0.5)',
+                        'rgba(6,214,160, 0.5)',
+                        'rgba(12,176,169, 0.5)',
+                        'rgba(17,138,178, 0.5)',
+                        'rgba(7,59,76, 0.5)'
+                    ],
+                    borderColor: [
+                        'rgba(197, 59, 92, 1)',
+                        'rgba(245,123,108, 1)',
+                        'rgba(251,175,105, 1)',
+                        'rgba(255,209,102, 1)',
+                        'rgba(131,212,131, 1)',
+                        'rgba(6,214,160, 1)',
+                        'rgba(12,176,169, 1)',
+                        'rgba(17,138,178, 1)',
+                        'rgba(7,59,76, 1)'
+                    ],
+                    borderWidth: 1,
+                    hoverOffset: 30
+                }]
+            };
+
+            const category_chart_config = {
+                type: 'doughnut',
+                data: category_chart_data,
+                options: {
+                    responsive: false,
+                    radius: '95%',
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Income per source'
+                        },
+                        subtitle: {
+                            display: true,
+                            text: 'This month',
+                            padding: {
+                                bottom: 10
+                            }
+                        }
+                    }
+                }
+            };
+
+            const canvasCategoryElement = document.getElementById('categoryChart');
+
+            if (canvasCategoryElement) {
+                const categoryChart = new Chart(
+                    document.getElementById('categoryChart'),
+                    category_chart_config
+                );
+            };
+        });
+};
+
+const renderDashboardCharts = () => {
+    renderSourceChart();
+    renderCategoryChart();
+};
+
+document.onload = renderDashboardCharts();
