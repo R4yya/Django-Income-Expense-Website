@@ -23,6 +23,7 @@ const getCardData = () => {
                 placeholder.classList.remove("placeholder-wave");
                 placeholder.classList.remove("w-100");
             });
+
             updateCardData(results.income_card_data);
         });
 };
