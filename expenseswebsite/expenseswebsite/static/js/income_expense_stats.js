@@ -1,3 +1,19 @@
+function handleHover(evt, item, legend) {
+    legend.chart.data.datasets[0].backgroundColor.forEach((color, index, colors) => {
+    if (index !== item.index) {
+            colors[index] = color.replace('0.6', '0.2');
+        }
+    });
+    legend.chart.update();
+};
+
+function handleLeave(evt, item, legend) {
+legend.chart.data.datasets[0].backgroundColor.forEach((color, index, colors) => {
+        colors[index] = color.replace('0.2', '0.6');
+    });
+    legend.chart.update();
+};
+
 const renderSourceChart = () => {
     fetch('dahsboard-income-source-summary')
         .then(res => res.json())
@@ -12,18 +28,21 @@ const renderSourceChart = () => {
                 labels: income_lables,
                 datasets: [{
                     label: 'Amount',
+
                     data: income_data,
+
                     backgroundColor: [
-                        'rgba(197, 59, 92, 0.5)',
-                        'rgba(245,123,108, 0.5)',
-                        'rgba(251,175,105, 0.5)',
-                        'rgba(255,209,102, 0.5)',
-                        'rgba(131,212,131, 0.5)',
-                        'rgba(6,214,160, 0.5)',
-                        'rgba(12,176,169, 0.5)',
-                        'rgba(17,138,178, 0.5)',
-                        'rgba(7,59,76, 0.5)'
+                        'rgba(197, 59, 92, 0.6)',
+                        'rgba(245,123,108, 0.6)',
+                        'rgba(251,175,105, 0.6)',
+                        'rgba(255,209,102, 0.6)',
+                        'rgba(131,212,131, 0.6)',
+                        'rgba(6,214,160, 0.6)',
+                        'rgba(12,176,169, 0.6)',
+                        'rgba(17,138,178, 0.6)',
+                        'rgba(7,59,76, 0.6)'
                     ],
+
                     borderColor: [
                         'rgba(197, 59, 92, 1)',
                         'rgba(245,123,108, 1)',
@@ -36,6 +55,7 @@ const renderSourceChart = () => {
                         'rgba(7,59,76, 1)'
                     ],
                     borderWidth: 1,
+
                     hoverOffset: 30
                 }]
             };
@@ -56,6 +76,13 @@ const renderSourceChart = () => {
                             text: 'This month',
                             padding: {
                                 bottom: 10
+                            }
+                        },
+                        legend: {
+                            onHover: handleHover,
+                            onLeave: handleLeave,
+                            labels: {
+                                usePointStyle: true,
                             }
                         }
                     }
@@ -89,18 +116,21 @@ const renderCategoryChart = () => {
                 labels: expense_lables,
                 datasets: [{
                     label: 'Amount',
+
                     data: expense_data,
+
                     backgroundColor: [
-                        'rgba(197, 59, 92, 0.5)',
-                        'rgba(245,123,108, 0.5)',
-                        'rgba(251,175,105, 0.5)',
-                        'rgba(255,209,102, 0.5)',
-                        'rgba(131,212,131, 0.5)',
-                        'rgba(6,214,160, 0.5)',
-                        'rgba(12,176,169, 0.5)',
-                        'rgba(17,138,178, 0.5)',
-                        'rgba(7,59,76, 0.5)'
+                        'rgba(197, 59, 92, 0.6)',
+                        'rgba(245,123,108, 0.6)',
+                        'rgba(251,175,105, 0.6)',
+                        'rgba(255,209,102, 0.6)',
+                        'rgba(131,212,131, 0.6)',
+                        'rgba(6,214,160, 0.6)',
+                        'rgba(12,176,169, 0.6)',
+                        'rgba(17,138,178, 0.6)',
+                        'rgba(7,59,76, 0.6)'
                     ],
+
                     borderColor: [
                         'rgba(197, 59, 92, 1)',
                         'rgba(245,123,108, 1)',
@@ -113,6 +143,7 @@ const renderCategoryChart = () => {
                         'rgba(7,59,76, 1)'
                     ],
                     borderWidth: 1,
+
                     hoverOffset: 30
                 }]
             };
@@ -126,13 +157,20 @@ const renderCategoryChart = () => {
                     plugins: {
                         title: {
                             display: true,
-                            text: 'Income per source'
+                            text: 'Expense per category'
                         },
                         subtitle: {
                             display: true,
                             text: 'This month',
                             padding: {
                                 bottom: 10
+                            }
+                        },
+                        legend: {
+                            onHover: handleHover,
+                            onLeave: handleLeave,
+                            labels: {
+                                usePointStyle: true,
                             }
                         }
                     }
