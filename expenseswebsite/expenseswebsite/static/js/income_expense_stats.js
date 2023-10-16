@@ -1,3 +1,7 @@
+const month_name = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const todays_date = new Date();
+let this_month = month_name[todays_date.getMonth()];
+
 function handleHover(evt, item, legend) {
     legend.chart.data.datasets[0].backgroundColor.forEach((color, index, colors) => {
     if (index !== item.index) {
@@ -69,11 +73,11 @@ const renderSourceChart = () => {
                     plugins: {
                         title: {
                             display: true,
-                            text: 'Income per source'
+                            text: 'Doughnut chart of the distribution of income by source'
                         },
                         subtitle: {
                             display: true,
-                            text: 'This month',
+                            text: 'This month (' + this_month + ')',
                             padding: {
                                 bottom: 10
                             }
@@ -157,11 +161,11 @@ const renderCategoryChart = () => {
                     plugins: {
                         title: {
                             display: true,
-                            text: 'Expense per category'
+                            text: 'Doughnut chart of the distribution of expenses by category'
                         },
                         subtitle: {
                             display: true,
-                            text: 'This month',
+                            text: 'This month (' + this_month + ')',
                             padding: {
                                 bottom: 10
                             }
