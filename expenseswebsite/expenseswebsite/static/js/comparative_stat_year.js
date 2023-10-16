@@ -1,14 +1,14 @@
 const renderComparativeYearChart = () => {
-    fetch('comparative-stat')
+    fetch('comparative-stat-year')
         .then(res => res.json())
         .then(results => {
-            const expenses_to_compare_year = results.comparative_data.expenses;
+            const expenses_to_compare_year = results.comparative_data_year.expenses;
             const [lables_expenses_to_compare_year, data_expenses_to_compare_year] = [
                 Object.keys(expenses_to_compare_year),
                 Object.values(expenses_to_compare_year)
             ];
 
-            const income_to_compare_year = results.comparative_data.income;
+            const income_to_compare_year = results.comparative_data_year.income;
             const [lables_income_to_compare_year, data_income_to_compare_year] = [
                 Object.keys(income_to_compare_year),
                 Object.values(income_to_compare_year)
