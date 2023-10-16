@@ -77,10 +77,7 @@ const renderSourceChart = () => {
                         },
                         subtitle: {
                             display: true,
-                            text: 'This month (' + this_month + ')',
-                            padding: {
-                                bottom: 10
-                            }
+                            text: 'This month (' + this_month + ')'
                         },
                         legend: {
                             onHover: handleHover,
@@ -165,10 +162,7 @@ const renderCategoryChart = () => {
                         },
                         subtitle: {
                             display: true,
-                            text: 'This month (' + this_month + ')',
-                            padding: {
-                                bottom: 10
-                            }
+                            text: 'This month (' + this_month + ')'
                         },
                         legend: {
                             onHover: handleHover,
