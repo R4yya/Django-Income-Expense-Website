@@ -25,16 +25,14 @@ const renderComparativeMonthChart = () => {
                     data: data_expenses_to_compare_month,
 
                     backgroundColor: [
-                        'rgba(4, 110, 72, 1)',
+                        'rgba(146, 20, 12, 0.2)',
                     ],
 
+                    borderColor: [
+                        'rgba(146, 20, 12, 1)',
+                    ],
+                    borderWidth: 2,
                     borderRadius: 2,
-
-                    fill: 'start',
-
-                    pointBackgroundColor:[
-                        'rgba(4, 110, 72, 1)'
-                    ]
                 },
                 {
                     label: 'Income',
@@ -42,20 +40,14 @@ const renderComparativeMonthChart = () => {
                     data: data_income_to_compare_month,
 
                     backgroundColor: [
-                        'rgba(196, 92, 94, 0.2)',
+                        'rgba(5, 136, 71, 0.2)',
                     ],
 
                     borderColor: [
-                        'rgba(196, 92, 94, 1)',
+                        'rgba(5, 136, 71, 1)',
                     ],
                     borderWidth: 2,
                     borderRadius: 2,
-
-                    fill: 'start',
-
-                    pointBackgroundColor:[
-                        'rgba(4, 110, 72, 1)'
-                    ]
                 }
                 ]
             };
@@ -64,7 +56,7 @@ const renderComparativeMonthChart = () => {
                 type: 'bar',
                 data: comparative_month_chart_data,
                 options: {
-                    responsive: false,
+                    responsive: true,
                     animation: {
                         onComplete: () => {
                             delayed = true;
