@@ -33,6 +33,8 @@ const renderComparativeMonthChart = () => {
                     ],
                     borderWidth: 2,
                     borderRadius: 2,
+
+                    pointStyle: 'rect'
                 },
                 {
                     label: 'Income',
@@ -48,6 +50,8 @@ const renderComparativeMonthChart = () => {
                     ],
                     borderWidth: 2,
                     borderRadius: 2,
+                    
+                    pointStyle: 'rect'
                 }
                 ]
             };
@@ -72,7 +76,14 @@ const renderComparativeMonthChart = () => {
                     scales: {
                         y: {
                             beginAtZero: true
-                        },
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                usePointStyle: true,
+                            }
+                        }
                     }
                 }
             };
