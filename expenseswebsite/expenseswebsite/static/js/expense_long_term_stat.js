@@ -18,11 +18,11 @@ const renderExpenseWeekChart = () => {
                     data: expenses_week_data,
 
                     backgroundColor: [
-                        'rgba(4, 110, 72, 0.2)',
+                        'rgba(5, 136, 71, 0.2)',
                     ],
 
                     borderColor: [
-                        'rgba(4, 110, 72, 1)',
+                        'rgba(5, 136, 71, 1)',
                     ],
                     borderWidth: 1,
 
@@ -30,7 +30,7 @@ const renderExpenseWeekChart = () => {
 
                     pointStyle: 'circle',
                     pointBackgroundColor:[
-                        'rgba(4, 110, 72, 1)',
+                        'rgba(5, 136, 71, 1)',
                     ]
                 }]
             };
@@ -162,11 +162,11 @@ const renderExpenseYearChart = () => {
                     data: expenses_year_data,
 
                     backgroundColor: [
-                        'rgba(186, 39, 74, 0.2)',
+                        'rgba(146, 20, 12, 0.2)',
                     ],
 
                     borderColor: [
-                        'rgba(186, 39, 74, 1)',
+                        'rgba(146, 20, 12, 1)',
                     ],
                     borderWidth: 1,
 
@@ -174,7 +174,7 @@ const renderExpenseYearChart = () => {
 
                     pointStyle: 'circle',
                     pointBackgroundColor:[
-                        'rgba(186, 39, 74, 1)',
+                        'rgba(146, 20, 12, 1)',
                     ]
                 }]
             };
