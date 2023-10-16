@@ -1,16 +1,16 @@
 let delayed;
 
 const renderComparativeMonthChart = () => {
-    fetch('comparative-stat')
+    fetch('comparative-stat-month')
         .then(res => res.json())
         .then(results => {
-            const expenses_to_compare_month = results.comparative_data.expenses;
+            const expenses_to_compare_month = results.comparative_data_month.expenses;
             const [lables_expenses_to_compare_month, data_expenses_to_compare_month] = [
                 Object.keys(expenses_to_compare_month),
                 Object.values(expenses_to_compare_month)
             ];
 
-            const income_to_compare_month = results.comparative_data.income;
+            const income_to_compare_month = results.comparative_data_month.income;
             const [lables_income_to_compare_month, data_income_to_compare_month] = [
                 Object.keys(income_to_compare_month),
                 Object.values(income_to_compare_month)
