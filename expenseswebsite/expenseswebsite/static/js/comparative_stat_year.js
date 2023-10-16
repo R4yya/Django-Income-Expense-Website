@@ -34,6 +34,7 @@ const renderComparativeYearChart = () => {
                     ],
                     borderWidth: 2,
 
+                    pointStyle: 'rect',
                     pointRadius: 2,
                     pointBackgroundColor:[
                         'rgba(146, 20, 12, 1)'
@@ -58,6 +59,7 @@ const renderComparativeYearChart = () => {
                     ],
                     borderWidth: 2,
 
+                    pointStyle: 'rect',
                     pointRadius: 2,
                     pointBackgroundColor:[
                         'rgba(5, 136, 71, 1)'
@@ -93,6 +95,13 @@ const renderComparativeYearChart = () => {
                         y: {
                             beginAtZero: true
                         },
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                usePointStyle: true,
+                            }
+                        }
                     }
                 }
             };
