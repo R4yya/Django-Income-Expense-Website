@@ -15,7 +15,6 @@
                 </ol>
             </nav>
         </div>
-        {% if income.count %}
         <div class="col-md-4">
             <div class="form-group">
                 <input type="text" class="form-control form-control-sm px-3 h-100 rounded border-1" id="searchField" placeholder="Search">
@@ -26,6 +25,7 @@
         </div>
     </div>
     <div class="container px-0">
+        {% if income.count %}
         <div class="container mt-3">
             {% include 'partials/_messages.html' %}
         </div>
