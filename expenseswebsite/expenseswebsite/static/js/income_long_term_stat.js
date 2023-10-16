@@ -1,3 +1,11 @@
+const month_name = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const todays_date = new Date();
+let this_weekday = todays_date.getDay();
+let this_week_start = todays_date.getDate() - this_weekday + 1;
+let this_week_end = this_week_start + 6;
+let this_month = month_name[todays_date.getMonth()];
+let this_year = todays_date.getFullYear();
+
 let delayed;
 
 const renderIncomeWeekChart = () => {
@@ -13,7 +21,7 @@ const renderIncomeWeekChart = () => {
             const income_week_chart_data = {
                 labels: income_week_lables,
                 datasets: [{
-                    label: 'This week',
+                    label: 'Amount',
 
                     data: incomes_week_data,
 
@@ -62,6 +70,14 @@ const renderIncomeWeekChart = () => {
                         },
                     },
                     plugins: {
+                        title: {
+                            display: true,
+                            text: 'All income'
+                        },
+                        subtitle: {
+                            display: true,
+                            text: 'This week (' + this_month + ' ' + this_week_start + ' - ' + this_month + ' ' + this_week_end + ')'
+                        },
                         legend: {
                             labels: {
                                 usePointStyle: true,
@@ -95,7 +111,7 @@ const renderIncomeMonthChart = () => {
             const income_month_chart_data = {
                 labels: income_month_lables,
                 datasets: [{
-                    label: 'This month',
+                    label: 'Amount',
 
                     data: incomes_month_data,
 
@@ -144,6 +160,14 @@ const renderIncomeMonthChart = () => {
                         },
                     },
                     plugins: {
+                        title: {
+                            display: true,
+                            text: 'All income'
+                        },
+                        subtitle: {
+                            display: true,
+                            text: 'This month (' + this_month + ')'
+                        },
                         legend: {
                             labels: {
                                 usePointStyle: true,
@@ -177,7 +201,7 @@ const renderIncomeYearChart = () => {
             const income_year_chart_data = {
                 labels: income_year_lables,
                 datasets: [{
-                    label: 'This year',
+                    label: 'Amount',
 
                     data: incomes_year_data,
 
@@ -226,6 +250,14 @@ const renderIncomeYearChart = () => {
                         },
                     },
                     plugins: {
+                        title: {
+                            display: true,
+                            text: 'All income'
+                        },
+                        subtitle: {
+                            display: true,
+                            text: 'This year (' + this_year + ')'
+                        },
                         legend: {
                             labels: {
                                 usePointStyle: true,
