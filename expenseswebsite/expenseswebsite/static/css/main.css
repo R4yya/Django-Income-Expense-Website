@@ -67,14 +67,6 @@
     --bs-btn-active-border-color: #5a23c8;
 }
 
-.bd-mode-toggle {
-    z-index: 1500;
-}
-
-.bd-mode-toggle .dropdown-menu .active .bi {
-    display: block !important;
-}
-
 .showPasswordToggle {
     cursor: pointer;
     transition: all;
@@ -84,3 +76,19 @@
 .showPasswordToggle:hover {
     transform: scale(1.2);
 }
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: #656565;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #1a1a1a;
+}
+
+scrollbar-width: thin;
+scrollbar-color: #1a1a1a #656565;
