@@ -29,12 +29,13 @@ const renderExpenseWeekChart = () => {
                     ],
                     borderWidth: 1,
 
-                    fill: 'start',
-
-                    pointStyle: 'circle',
+                    pointStyle: 'rect',
+                    pointRadius: 2,
                     pointBackgroundColor:[
-                        'rgba(5, 136, 71, 1)',
-                    ]
+                        'rgba(5, 136, 71, 1)'
+                    ],
+
+                    fill: 'start'
                 }]
             };
 
@@ -59,6 +60,13 @@ const renderExpenseWeekChart = () => {
                         y: {
                             beginAtZero: true
                         },
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                usePointStyle: true,
+                            }
+                        }
                     }
                 }
             };
@@ -103,12 +111,13 @@ const renderExpenseMonthChart = () => {
                     ],
                     borderWidth: 1,
 
-                    fill: 'start',
-
-                    pointStyle: 'circle',
+                    pointStyle: 'rect',
+                    pointRadius: 2,
                     pointBackgroundColor:[
-                        'rgba(2, 42, 83, 1)',
-                    ]
+                        'rgba(2, 42, 83, 1)'
+                    ],
+
+                    fill: 'start'
                 }]
             };
 
@@ -133,6 +142,13 @@ const renderExpenseMonthChart = () => {
                         y: {
                             beginAtZero: true
                         },
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                usePointStyle: true,
+                            }
+                        }
                     }
                 }
             };
@@ -177,12 +193,13 @@ const renderExpenseYearChart = () => {
                     ],
                     borderWidth: 1,
 
-                    fill: 'start',
-
-                    pointStyle: 'circle',
+                    pointStyle: 'rect',
+                    pointRadius: 2,
                     pointBackgroundColor:[
-                        'rgba(146, 20, 12, 1)',
-                    ]
+                        'rgba(146, 20, 12, 1)'
+                    ],
+
+                    fill: 'start'
                 }]
             };
 
@@ -207,6 +224,13 @@ const renderExpenseYearChart = () => {
                         y: {
                             beginAtZero: true
                         },
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                usePointStyle: true,
+                            }
+                        }
                     }
                 }
             };
