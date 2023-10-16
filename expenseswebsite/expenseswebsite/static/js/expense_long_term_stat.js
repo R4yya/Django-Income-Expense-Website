@@ -17,6 +17,9 @@ const renderExpenseWeekChart = () => {
 
                     data: expenses_week_data,
 
+                    cubicInterpolationMode: 'monotone',
+                    tension: 0.4,
+
                     backgroundColor: [
                         'rgba(5, 136, 71, 0.2)',
                     ],
@@ -39,7 +42,6 @@ const renderExpenseWeekChart = () => {
                 type: 'line',
                 data: expense_week_chart_data,
                 options: {
-                    tension: 0.15,
                     responsive: false,
                     animation: {
                         onComplete: () => {
@@ -89,6 +91,9 @@ const renderExpenseMonthChart = () => {
 
                     data: expenses_month_data,
 
+                    cubicInterpolationMode: 'monotone',
+                    tension: 0.4,
+
                     backgroundColor: [
                         'rgba(2, 42, 83, 0.2)',
                     ],
@@ -111,7 +116,6 @@ const renderExpenseMonthChart = () => {
                 type: 'line',
                 data: expense_month_chart_data,
                 options: {
-                    tension: 0.15,
                     responsive: false,
                     animation: {
                         onComplete: () => {
@@ -161,6 +165,9 @@ const renderExpenseYearChart = () => {
 
                     data: expenses_year_data,
 
+                    cubicInterpolationMode: 'monotone',
+                    tension: 0.4,
+
                     backgroundColor: [
                         'rgba(146, 20, 12, 0.2)',
                     ],
@@ -183,7 +190,6 @@ const renderExpenseYearChart = () => {
                 type: 'line',
                 data: expense_year_chart_data,
                 options: {
-                    tension: 0.15,
                     responsive: false,
                     animation: {
                         onComplete: () => {

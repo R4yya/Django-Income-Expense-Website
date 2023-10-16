@@ -23,6 +23,7 @@ const renderComparativeYearChart = () => {
                     data: data_expenses_to_compare_year,
 
                     cubicInterpolationMode: 'monotone',
+                    tension: 0.4,
 
                     backgroundColor: [
                         'rgba(146, 20, 12, 0.2)',
@@ -46,6 +47,7 @@ const renderComparativeYearChart = () => {
                     data: data_income_to_compare_year,
 
                     cubicInterpolationMode: 'monotone',
+                    tension: 0.4,
 
                     backgroundColor: [
                         'rgba(5, 136, 71, 0.2)',

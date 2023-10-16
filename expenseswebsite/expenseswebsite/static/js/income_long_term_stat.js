@@ -17,6 +17,9 @@ const renderIncomeWeekChart = () => {
 
                     data: incomes_week_data,
 
+                    cubicInterpolationMode: 'monotone',
+                    tension: 0.4,
+
                     backgroundColor: [
                         'rgba(5, 136, 71, 0.2)',
                     ],
@@ -39,7 +42,6 @@ const renderIncomeWeekChart = () => {
                 type: 'line',
                 data: income_week_chart_data,
                 options: {
-                    tension: 0.15,
                     responsive: false,
                     animation: {
                         onComplete: () => {
@@ -89,6 +91,9 @@ const renderIncomeMonthChart = () => {
 
                     data: incomes_month_data,
 
+                    cubicInterpolationMode: 'monotone',
+                    tension: 0.4,
+
                     backgroundColor: [
                         'rgba(2, 42, 83, 0.2)',
                     ],
@@ -111,7 +116,6 @@ const renderIncomeMonthChart = () => {
                 type: 'line',
                 data: income_month_chart_data,
                 options: {
-                    tension: 0.15,
                     responsive: false,
                     animation: {
                         onComplete: () => {
@@ -161,6 +165,9 @@ const renderIncomeYearChart = () => {
 
                     data: incomes_year_data,
 
+                    cubicInterpolationMode: 'monotone',
+                    tension: 0.4,
+
                     backgroundColor: [
                         'rgba(146, 20, 12, 0.2)',
                     ],
@@ -183,7 +190,6 @@ const renderIncomeYearChart = () => {
                 type: 'line',
                 data: income_year_chart_data,
                 options: {
-                    tension: 0.15,
                     responsive: false,
                     animation: {
                         onComplete: () => {
