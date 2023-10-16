@@ -1,28 +1,26 @@
-let delayed;
-
-const renderComparativeChart = () => {
+const renderComparativeYearChart = () => {
     fetch('comparative-stat')
         .then(res => res.json())
         .then(results => {
-            const expenses_to_compare_data = results.comparative_data.expenses;
-            const [lables_expenses_to_compare, data_expenses_to_compare] = [
-                Object.keys(expenses_to_compare_data),
-                Object.values(expenses_to_compare_data)
+            const expenses_to_compare_year = results.comparative_data.expenses;
+            const [lables_expenses_to_compare_year, data_expenses_to_compare_year] = [
+                Object.keys(expenses_to_compare_year),
+                Object.values(expenses_to_compare_year)
             ];
 
-            const income_to_compare_data = results.comparative_data.income;
-            const [lables_income_to_compare, data_income_to_compare] = [
-                Object.keys(income_to_compare_data),
-                Object.values(income_to_compare_data)
+            const income_to_compare_year = results.comparative_data.income;
+            const [lables_income_to_compare_year, data_income_to_compare_year] = [
+                Object.keys(income_to_compare_year),
+                Object.values(income_to_compare_year)
             ];
 
-            const comparative_chart_data = {
-                labels: lables_expenses_to_compare,
+            const comparative_year_chart_data = {
+                labels: lables_expenses_to_compare_year,
                 datasets: [
                 {
                     label: 'Expenses',
 
-                    data: data_expenses_to_compare,
+                    data: data_expenses_to_compare_year,
 
                     backgroundColor: [
                         'rgba(4, 110, 72, 0.2)',
@@ -40,7 +38,7 @@ const renderComparativeChart = () => {
                 {
                     label: 'Income',
 
-                    data: data_income_to_compare,
+                    data: data_income_to_compare_year,
 
                     backgroundColor: [
                         'rgba(196, 92, 94, 0.2)',
@@ -58,9 +56,9 @@ const renderComparativeChart = () => {
                 ]
             };
 
-            const comparative_chart_config = {
+            const comparative_year_chart_config = {
                 type: 'line',
-                data: comparative_chart_data,
+                data: comparative_year_chart_data,
                 options: {
                     responsive: false,
                     interaction: {
@@ -87,11 +85,11 @@ const renderComparativeChart = () => {
                 }
             };
 
-            const comparativeChart = new Chart(
-                document.getElementById('comparativeChart'),
-                comparative_chart_config
+            const comparativeYearChart = new Chart(
+                document.getElementById('comparativeYearChart'),
+                comparative_year_chart_config
             );
         });
 };
 
-document.onload = renderComparativeChart();
+document.onload = renderComparativeYearChart();
