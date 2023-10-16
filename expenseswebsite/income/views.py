@@ -14,7 +14,7 @@ import calendar
 @login_required(login_url='/authentication/login')
 def index(request):
     income = Income.objects.filter(owner=request.user)
-    paginator = Paginator(income, 10)
+    paginator = Paginator(income, 12)
     page_number = request.GET.get('page')
     page_obj = Paginator.get_page(paginator, page_number)
     currency = UserPreference.objects.get(user=request.user).currency
