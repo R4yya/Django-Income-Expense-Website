@@ -22,36 +22,46 @@ const renderComparativeYearChart = () => {
 
                     data: data_expenses_to_compare_year,
 
+                    cubicInterpolationMode: 'monotone',
+
                     backgroundColor: [
-                        'rgba(4, 110, 72, 0.2)',
+                        'rgba(146, 20, 12, 0.2)',
                     ],
 
                     borderColor: [
-                        'rgba(4, 110, 72, 1)',
+                        'rgba(146, 20, 12, 1)',
                     ],
                     borderWidth: 2,
 
+                    pointRadius: 2,
                     pointBackgroundColor:[
-                        'rgba(4, 110, 72, 1)'
-                    ]
+                        'rgba(146, 20, 12, 1)'
+                    ],
+
+                    fill: 'start',
                 },
                 {
                     label: 'Income',
 
                     data: data_income_to_compare_year,
 
+                    cubicInterpolationMode: 'monotone',
+
                     backgroundColor: [
-                        'rgba(196, 92, 94, 0.2)',
+                        'rgba(5, 136, 71, 0.2)',
                     ],
 
                     borderColor: [
-                        'rgba(196, 92, 94, 1)',
+                        'rgba(5, 136, 71, 1)',
                     ],
                     borderWidth: 2,
 
+                    pointRadius: 2,
                     pointBackgroundColor:[
-                        'rgba(196, 92, 94, 1)'
-                    ]
+                        'rgba(5, 136, 71, 1)'
+                    ],
+
+                    fill: 'start',
                 }
                 ]
             };
@@ -60,7 +70,7 @@ const renderComparativeYearChart = () => {
                 type: 'line',
                 data: comparative_year_chart_data,
                 options: {
-                    responsive: false,
+                    responsive: true,
                     interaction: {
                         mode: 'index',
                         intersect: false,
