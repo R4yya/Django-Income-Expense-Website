@@ -1,3 +1,5 @@
+let this_year = todays_date.getFullYear();
+
 const renderComparativeYearChart = () => {
     fetch('comparative-stat-year')
         .then(res => res.json())
@@ -97,6 +99,14 @@ const renderComparativeYearChart = () => {
                         },
                     },
                     plugins: {
+                        title: {
+                            display: true,
+                            text: 'Сomparative graph of both expenses and income'
+                        },
+                        subtitle: {
+                            display: true,
+                            text: 'This year (' + this_year + ')'
+                        },
                         legend: {
                             labels: {
                                 usePointStyle: true,
