@@ -1,7 +1,3 @@
-const month_name = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-const todays_date = new Date();
-let this_month = month_name[todays_date.getMonth()];
-
 let delayed;
 
 const renderComparativeMonthChart = () => {
