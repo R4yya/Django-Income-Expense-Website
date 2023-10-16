@@ -83,7 +83,7 @@ def income_source_summary(request):
     return JsonResponse({'income_source_data': final_rep}, safe=False)
 
 
-def comparative_stat(request):
+def comparative_stat_month(request):
     todays_date = date.today()
     first_day_of_current_month = todays_date.replace(day=1)
     last_day_of_current_month = (todays_date.replace(day=1) + timedelta(days=32)).replace(day=1) - timedelta(days=1)
@@ -115,4 +115,38 @@ def comparative_stat(request):
 
     final_rep = {'expenses': expenses_dict, 'income': income_dict}
 
-    return JsonResponse({'comparative_data': final_rep}, safe=False)
+    return JsonResponse({'comparative_data_month': final_rep}, safe=False)
+
+
+def comparative_stat_year(request):
+    todays_date = date.today()
+    first_day_of_current_year = todays_date.replace(month=1, day=1)
+    last_day_of_current_year = todays_date.replace(month=12, day=31)
+
+    expenses = Expense.objects.filter(
+        owner=request.user,
+        date__gte=first_day_of_current_year,
+        date__lte=last_day_of_current_year
+    )
+
+    income = Income.objects.filter(
+        owner=request.user,
+        date__gte=first_day_of_current_year,
+        date__lte=last_day_of_current_year
+    )
+
+    month_names = [calendar.month_name[i] for i in range(1, 13)]
+    income_dict = {month: 0 for month in month_names}
+    expenses_dict = {month: 0 for month in month_names}
+
+    for item in income:
+        month_name = calendar.month_name[item.date.month]
+        income_dict[month_name] += item.amount
+
+    for expense in expenses:
+        month_name = calendar.month_name[item.date.month]
+        expenses_dict[month_name] += expense.amount
+
+    final_rep = {'expenses': expenses_dict, 'income': income_dict}
+
+    return JsonResponse({'comparative_data_year': final_rep}, safe=False)
