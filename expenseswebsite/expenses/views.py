@@ -10,6 +10,8 @@ from json import loads
 from datetime import date, timedelta, datetime
 import calendar
 from csv import writer
+from openpyxl import Workbook
+from openpyxl.styles import Font, Alignment, Border, Side
 
 
 @login_required(login_url='/authentication/login')
@@ -267,17 +269,65 @@ def expense_stats(request):
 
 
 @login_required(login_url='/authentication/login')
+def export_expenses_excel(request):
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = f'attachment; filename={request.user.username}_expenses_{str(datetime.now())}.xlsx'
+
+    wb = Workbook()
+    ws = wb.create_sheet('Expenses', 0)
+
+    header_font_style = Font(
+        size=14,
+        bold=True
+    )
+
+    header_alignment = Alignment(horizontal='center', vertical='center')
+    main_alignment = Alignment(horizontal='left', vertical='center')
+
+    column_width = 20
+    columns = ['A', 'B', 'C', 'D']
+
+    for column in columns:
+        ws.column_dimensions[column].width = column_width
+
+    border = Border(
+        left=Side(border_style="thin", color='00000000'),
+        right=Side(border_style="thin", color='00000000'),
+        top=Side(border_style="thin", color='00000000'),
+        bottom=Side(border_style="thin", color='00000000')
+    )
+
+    ws.append(['Amount', 'Category', 'Description', 'Date'])
+
+    for cell in ws[1]:
+        cell.font = header_font_style
+        cell.alignment = header_alignment
+        cell.border = border
+
+    rows = Expense.objects.filter(owner=request.user).values_list('amount', 'category', 'description', 'date')
+    for row_num, row in enumerate(rows):
+        ws.append(row)
+        for cell in ws[2 + row_num]:
+            cell.alignment = main_alignment
+            cell.border = border
+
+    wb.save(response)
+
+    return response
+
+
+@login_required(login_url='/authentication/login')
 def export_expenses_csv(request):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = f'attachment; filename={request.user.username}_expenses_{str(datetime.now())}.csv'
 
     csv_writer = writer(response)
-    csv_writer.writerow(['Amount', 'Date', 'Category', 'Description'])
+    csv_writer.writerow(['Amount', 'Category', 'Description', 'Date'])
 
     expenses = Expense.objects.filter(owner=request.user)
 
     for expense in expenses:
-        csv_writer.writerow([expense.amount, expense.date, expense.category, expense.description])
+        csv_writer.writerow([expense.amount, expense.category, expense.description, expense.date])
 
     return response
 
