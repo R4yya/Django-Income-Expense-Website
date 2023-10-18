@@ -272,12 +272,12 @@ def export_income_csv(request):
     response['Content-Disposition'] = f'attachment; filename={request.user.username}_income_{str(datetime.now())}.csv'
 
     csv_writer = writer(response)
-    csv_writer.writerow(['Amount', 'Date', 'Category', 'Description'])
+    csv_writer.writerow(['Amount', 'Source', 'Description', 'Date'])
 
     income = Income.objects.filter(owner=request.user)
 
     for item in income:
-        csv_writer.writerow([item.amount, item.date, item.source, item.description])
+        csv_writer.writerow([item.amount, item.source, item.description, item.date])
 
     return response
 
