@@ -2,13 +2,14 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 
 from userpreferences.models import UserPreference
 from .models import Category, Expense
 from json import loads
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 import calendar
+from csv import writer
 
 
 @login_required(login_url='/authentication/login')
@@ -257,6 +258,21 @@ def expense_card_summary(request):
 @login_required(login_url='/authentication/login')
 def expense_stats(request):
     return render(request, 'expenses/expense-stats.html')
+
+
+def export_expenses_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = f'attachment; filename={request.user.username}_expenses_{str(datetime.now())}.csv'
+
+    csv_writer = writer(response)
+    csv_writer.writerow(['Amount', 'Date', 'Category', 'Description'])
+
+    expenses = Expense.objects.filter(owner=request.user)
+
+    for expense in expenses:
+        csv_writer.writerow([expense.amount, expense.date, expense.category, expense.description])
+
+    return response
 
 
 @login_required(login_url='/authentication/login')
