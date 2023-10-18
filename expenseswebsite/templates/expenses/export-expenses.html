@@ -21,17 +21,17 @@
     <p class="lead">Please select your preferred expenses data export format:</p>
     <div class="row mb-3">
         <div class="col-md-2">
-            <button class="btn btn-outline-primary w-75 rounded-1 p-0">PDF</button>
+            <a class="btn btn-outline-primary w-75 rounded-1 p-0" href="#">PDF</a>
         </div>
     </div>
     <div class="row mb-3">
         <div class="col-md-2">
-            <button class="btn btn-outline-primary w-75 rounded-1 p-0">Excel</button>
+            <a class="btn btn-outline-primary w-75 rounded-1 p-0" href="#">Excel</a>
         </div>
     </div>
     <div class="row">
         <div class="col-md-2">
-            <button class="btn btn-outline-primary w-75 rounded-1 p-0">CSV</button>
+            <a class="btn btn-outline-primary w-75 rounded-1 p-0" href="{% url 'export-expenses-csv' %}">CSV</a>
         </div>
     </div>
 </div>
