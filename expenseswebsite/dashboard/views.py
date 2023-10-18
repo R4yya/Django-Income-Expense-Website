@@ -13,6 +13,7 @@ def index(request):
     return render(request, 'index.html')
 
 
+@login_required(login_url='/authentication/login')
 def expense_category_summary(request):
     def get_category(expense):
         return expense.category
@@ -48,6 +49,7 @@ def expense_category_summary(request):
     return JsonResponse({'expense_category_data': final_rep}, safe=False)
 
 
+@login_required(login_url='/authentication/login')
 def income_source_summary(request):
     def get_source(income):
         return income.source
@@ -83,6 +85,7 @@ def income_source_summary(request):
     return JsonResponse({'income_source_data': final_rep}, safe=False)
 
 
+@login_required(login_url='/authentication/login')
 def comparative_stat_month(request):
     todays_date = date.today()
     first_day_of_current_month = todays_date.replace(day=1)
@@ -118,6 +121,7 @@ def comparative_stat_month(request):
     return JsonResponse({'comparative_data_month': final_rep}, safe=False)
 
 
+@login_required(login_url='/authentication/login')
 def comparative_stat_year(request):
     todays_date = date.today()
     first_day_of_current_year = todays_date.replace(month=1, day=1)

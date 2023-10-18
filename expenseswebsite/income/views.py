@@ -27,6 +27,7 @@ def index(request):
     return render(request, 'income/index.html', context)
 
 
+@login_required(login_url='/authentication/login')
 def search_income(request):
     if request.method == 'POST':
         search_string = loads(request.body).get('searchText')
@@ -130,6 +131,7 @@ def edit_income(request, id):
         return redirect('income')
 
 
+@login_required(login_url='/authentication/login')
 def delete_income(request, id):
     income = Income.objects.get(pk=id)
     income.delete()
@@ -139,6 +141,7 @@ def delete_income(request, id):
     return redirect('income')
 
 
+@login_required(login_url='/authentication/login')
 def income_week_summary(request):
     todays_date = date.today()
     current_week_start = todays_date - timedelta(days=todays_date.weekday())
@@ -160,6 +163,7 @@ def income_week_summary(request):
     return JsonResponse({'income_week_data': final_rep}, safe=False)
 
 
+@login_required(login_url='/authentication/login')
 def income_month_summary(request):
     todays_date = date.today()
     first_day_of_current_month = todays_date.replace(day=1)
@@ -181,6 +185,7 @@ def income_month_summary(request):
     return JsonResponse({'income_month_data': final_rep}, safe=False)
 
 
+@login_required(login_url='/authentication/login')
 def income_year_summary(request):
     todays_date = date.today()
     first_day_of_current_year = todays_date.replace(month=1, day=1)
@@ -202,6 +207,7 @@ def income_year_summary(request):
     return JsonResponse({'income_year_data': final_rep}, safe=False)
 
 
+@login_required(login_url='/authentication/login')
 def income_card_summary(request):
     def get_value(income):
         count = 0

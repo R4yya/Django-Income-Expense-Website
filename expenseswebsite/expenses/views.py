@@ -28,6 +28,7 @@ def index(request):
     return render(request, 'expenses/index.html', context)
 
 
+@login_required(login_url='/authentication/login')
 def search_expenses(request):
     if request.method == 'POST':
         search_string = loads(request.body).get('searchText')
@@ -131,6 +132,7 @@ def edit_expense(request, id):
         return redirect('expenses')
 
 
+@login_required(login_url='/authentication/login')
 def delete_expense(request, id):
     expense = Expense.objects.get(pk=id)
     expense.delete()
@@ -140,6 +142,7 @@ def delete_expense(request, id):
     return redirect('expenses')
 
 
+@login_required(login_url='/authentication/login')
 def expense_week_summary(request):
     todays_date = date.today()
     current_week_start = todays_date - timedelta(days=todays_date.weekday())
@@ -161,6 +164,7 @@ def expense_week_summary(request):
     return JsonResponse({'expense_week_data': final_rep}, safe=False)
 
 
+@login_required(login_url='/authentication/login')
 def expense_month_summary(request):
     todays_date = date.today()
     first_day_of_current_month = todays_date.replace(day=1)
@@ -182,6 +186,7 @@ def expense_month_summary(request):
     return JsonResponse({'expense_month_data': final_rep}, safe=False)
 
 
+@login_required(login_url='/authentication/login')
 def expense_year_summary(request):
     todays_date = date.today()
     first_day_of_current_year = todays_date.replace(month=1, day=1)
@@ -203,6 +208,7 @@ def expense_year_summary(request):
     return JsonResponse({'expense_year_data': final_rep}, safe=False)
 
 
+@login_required(login_url='/authentication/login')
 def expense_card_summary(request):
     def get_value(expenses):
         count = 0
@@ -260,6 +266,7 @@ def expense_stats(request):
     return render(request, 'expenses/expense-stats.html')
 
 
+@login_required(login_url='/authentication/login')
 def export_expenses_csv(request):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = f'attachment; filename={request.user.username}_expenses_{str(datetime.now())}.csv'
