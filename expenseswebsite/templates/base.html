@@ -1,10 +1,17 @@
 {% load static %}
 <html lang="en" data-bs-theme="light">
-
 <head>
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/favicon/favicon-16x16.png' %}">
+    <link rel="mask-icon" href="{% static 'img/favicon/safari-pinned-tab.svg' %}" color="#5bbad5">
+    <meta name="apple-mobile-web-app-title" content="YourExpenseManager">
+    <meta name="application-name" content="YourExpenseManager">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Income Expense Website">
+    <meta name="description" content="Income Expense WebsApp">
     <title>YourExpenseManager</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -12,9 +19,7 @@
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/main.css' %}" rel="stylesheet">
     <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
-    <link rel="icon" href="data:;base64,=">
 </head>
-
 <body>
     <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
         <symbol id="list" viewBox="0 0 16 16">
@@ -50,5 +55,4 @@
         </div>
     </div>
 </body>
-
 </html>
