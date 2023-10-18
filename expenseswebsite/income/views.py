@@ -257,3 +257,8 @@ def income_card_summary(request):
 @login_required(login_url='/authentication/login')
 def income_stats(request):
     return render(request, 'income/income-stats.html')
+
+
+@login_required(login_url='/authentication/login')
+def export_income(request):
+    return render(request, 'income/export-income.html')
