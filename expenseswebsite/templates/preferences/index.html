@@ -6,7 +6,6 @@
     {% include 'partials/_messages.html' %}
     <form action="{% url 'preferences' %}" method="post">
         {% csrf_token %}
-        
         <div class="input-group">
           <select name="currency" class="form-select border-1 rounded-start" id="inputGroupSelect03" aria-label="Example select with button addon">
             {% if user_preferences.currency %}
