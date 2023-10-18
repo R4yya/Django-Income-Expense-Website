@@ -277,7 +277,7 @@ def export_income_csv(request):
     income = Income.objects.filter(owner=request.user)
 
     for item in income:
-        csv_writer.writerow([item.amount, item.date, item.category, item.description])
+        csv_writer.writerow([item.amount, item.date, item.source, item.description])
 
     return response
 
