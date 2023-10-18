@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4 vh-100">
+    <div class="row">
+        <div class="col-md-10">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active">
+                        <a href="{% url 'dashboard' %}">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'expenses' %}">Expenses</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        Export
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <p class="lead">Please select your preferred data export format:</p>
+    <div class="row mb-3">
+        <div class="col-md-2">
+            <button class="btn btn-outline-primary w-100">PDF</button>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-2">
+            <button class="btn btn-outline-primary w-100">Excel</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <button class="btn btn-outline-primary w-100">CSV</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
