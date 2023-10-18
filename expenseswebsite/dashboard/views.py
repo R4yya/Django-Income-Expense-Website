@@ -148,7 +148,7 @@ def comparative_stat_year(request):
         income_dict[month_name] += item.amount
 
     for expense in expenses:
-        month_name = calendar.month_name[item.date.month]
+        month_name = calendar.month_name[expense.date.month]
         expenses_dict[month_name] += expense.amount
 
     final_rep = {'expenses': expenses_dict, 'income': income_dict}
