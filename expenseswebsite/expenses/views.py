@@ -257,3 +257,8 @@ def expense_card_summary(request):
 @login_required(login_url='/authentication/login')
 def expense_stats(request):
     return render(request, 'expenses/expense-stats.html')
+
+
+@login_required(login_url='/authentication/login')
+def export_expenses(request):
+    return render(request, 'expenses/export-expenses.html')
