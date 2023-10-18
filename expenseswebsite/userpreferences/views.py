@@ -45,4 +45,12 @@ def index(request):
 
 @login_required(login_url='/authentication/login')
 def account_preferences(request):
-    return render(request, 'preferences/account.html')
+    context = {
+        'username': request.user.username,
+        'firstname': request.user.first_name,
+        'lastname': request.user.last_name,
+        'email': request.user.email,
+        'date_joined': request.user.date_joined
+    }
+
+    return render(request, 'preferences/account.html', context)
