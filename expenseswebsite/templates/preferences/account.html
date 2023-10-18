@@ -1,6 +1,75 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container mt-4 vh-100">
-    
+    {% include 'partials/_messages.html' %}
+    <h5 class="m-0">Account information</h5>
+    <p class="lead fs-5 m-0">Only you can see this</p>
+    <hr class="mb-3 mt-1">
+    <div class="row mb-2">
+        <label for="username" class="col-md-2 col-form-label py-1">Username:</label>
+        <div class="col-md-2">
+            <input type="text" class="form-control form-control-sm border-1 rounded-1 py-1" id="username" value="{{ username }}" readonly>
+        </div>
+    </div>
+    {% if not firstname %}
+    <div class="row mb-2">
+        <label for="username" class="col-md-2 col-form-label py-1">First name:</label>
+        <div class="col-md-2">
+            <input type="text" class="form-control form-control-sm border-1 rounded-1 py-1" id="username" placeholder="Not set">
+        </div>
+        <div class="col-md-1">
+            <button href="" class="btn btn-sm btn-outline-success rounded-1 p-0 px-2 h-100">Change</button>
+        </div>
+    </div>
+    {% else %}
+    <div class="row mb-2">
+        <label for="username" class="col-md-2 col-form-label py-1">First name:</label>
+        <div class="col-md-2">
+            <input type="text" class="form-control form-control-sm border-1 rounded-1 py-1" id="username" value="{{ firstname }}">
+        </div>
+        <div class="col-md-1">
+            <button href="" class="btn btn-sm btn-outline-success rounded-1 p-0 px-2 h-100">Change</button>
+        </div>
+    </div>
+    {% endif %}
+    {% if not lastname %}
+    <div class="row mb-2">
+        <label for="username" class="col-md-2 col-form-label py-1">Last name:</label>
+        <div class="col-md-2">
+            <input type="text" class="form-control form-control-sm border-1 rounded-1 py-1" id="username" placeholder="Not set">
+        </div>
+        <div class="col-md-1">
+            <button href="" class="btn btn-sm btn-outline-success rounded-1 p-0 px-2 h-100">Change</button>
+        </div>
+    </div>
+    {% else %}
+    <div class="row mb-2">
+        <label for="username" class="col-md-2 col-form-label py-1">Last name:</label>
+        <div class="col-md-2">
+            <input type="text" class="form-control form-control-sm border-1 rounded-1 py-1" id="username" value="{{ lastname }}">
+        </div>
+        <div class="col-md-1">
+            <button href="" class="btn btn-sm btn-outline-success rounded-1 p-0 px-2 h-100">Change</button>
+        </div>
+    </div>
+    {% endif %}
+    <div class="row mb-2">
+        <label for="username" class="col-md-2 col-form-label py-1">E-mail:</label>
+        <div class="col-md-2">
+            <input type="text" class="form-control form-control-sm border-1 rounded-1 py-1" id="username" value="{{ email }}">
+        </div>
+        <div class="col-md-1">
+            <button href="" class="btn btn-sm btn-outline-success rounded-1 p-0 px-2 h-100">Change</button>
+        </div>
+    </div>
+    <h5 class="m-0 mt-5">Password</h5>
+    <hr class="mb-3 mt-1">
+    <button href="" class="btn btn-sm btn-outline-primary rounded-1 p-0 px-2">Change password</button>
+    <h5 class="m-0 mt-5">You have been with us since</h5>
+    <p class="lead fs-5 m-0">{{ date_joined }}</p>
+    <hr class="mb-3 mt-1">
+    <h5 class="m-0 mt-5">Account actions</h5>
+    <hr class="mb-3 mt-1">
+    <button href="" class="btn btn-sm btn-outline-danger rounded-1 p-0 px-2">Delete your account</button>
 </div>
 {% endblock %}
