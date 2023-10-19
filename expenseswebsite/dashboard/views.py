@@ -139,16 +139,16 @@ def comparative_stat_year(request):
         date__lte=last_day_of_current_year
     )
 
-    month_names = [calendar.month_name[i] for i in range(1, 13)]
+    month_names = [calendar.month_abbr[i] for i in range(1, 13)]
     income_dict = {month: 0 for month in month_names}
     expenses_dict = {month: 0 for month in month_names}
 
     for item in income:
-        month_name = calendar.month_name[item.date.month]
+        month_name = calendar.month_abbr[item.date.month]
         income_dict[month_name] += item.amount
 
     for expense in expenses:
-        month_name = calendar.month_name[expense.date.month]
+        month_name = calendar.month_abbr[expense.date.month]
         expenses_dict[month_name] += expense.amount
 
     final_rep = {'expenses': expenses_dict, 'income': income_dict}
