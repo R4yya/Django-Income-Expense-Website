@@ -200,11 +200,11 @@ def income_year_summary(request):
         date__lte=last_day_of_current_year
     )
 
-    month_names = [calendar.month_name[i] for i in range(1, 13)]
+    month_names = [calendar.month_abbr[i] for i in range(1, 13)]
     final_rep = {month: 0 for month in month_names}
 
     for item in income:
-        month_name = calendar.month_name[item.date.month]
+        month_name = calendar.month_abbr[item.date.month]
         final_rep[month_name] += item.amount
 
     return JsonResponse({'income_year_data': final_rep}, safe=False)
