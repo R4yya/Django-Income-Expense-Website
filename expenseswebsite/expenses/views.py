@@ -3,15 +3,18 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.http import JsonResponse, HttpResponse
+from django.template.loader import render_to_string
 
 from userpreferences.models import UserPreference
 from .models import Category, Expense
 from json import loads
 from datetime import date, timedelta, datetime
 import calendar
-from csv import writer
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
 from openpyxl import Workbook
 from openpyxl.styles import Font, Alignment, Border, Side
+from csv import writer
 
 
 @login_required(login_url='/authentication/login')
@@ -266,6 +269,20 @@ def expense_card_summary(request):
 @login_required(login_url='/authentication/login')
 def expense_stats(request):
     return render(request, 'expenses/expense-stats.html')
+
+
+@login_required(login_url='/authentication/login')
+def export_expenses_pdf(request):
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename={request.user.username}_expenses_{str(datetime.now())}.pdf'
+
+    p = canvas.Canvas(response, pagesize=letter)
+    p.drawString(100, 750, "Hello World!")
+
+    p.showPage()
+    p.save()
+
+    return response
 
 
 @login_required(login_url='/authentication/login')
