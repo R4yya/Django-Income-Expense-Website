@@ -3,15 +3,22 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.http import JsonResponse, HttpResponse
+from django.conf import settings
 
 from userpreferences.models import UserPreference
 from .models import Source, Income
 from json import loads
 from datetime import date, timedelta, datetime
 import calendar
-from csv import writer
+from reportlab.lib.pagesizes import letter, portrait
+from reportlab.lib import colors
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, Table, TableStyle, PageBreak
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.units import inch
 from openpyxl import Workbook
 from openpyxl.styles import Font, Alignment, Border, Side
+from csv import writer
+import os
 
 
 @login_required(login_url='/authentication/login')
@@ -266,6 +273,53 @@ def income_card_summary(request):
 @login_required(login_url='/authentication/login')
 def income_stats(request):
     return render(request, 'income/income-stats.html')
+
+
+@login_required(login_url='/authentication/login')
+def export_income_pdf(request):
+    def pdf_page_template(canvas, doc):
+        canvas.saveState()
+        canvas.setFont('Times-Bold', 12)
+        canvas.drawString(1 * inch, 0.75 * inch, 'YourExpenseManager')
+        canvas.restoreState()
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename={request.user.username}_income_{str(datetime.now())}.pdf'
+
+    doc = SimpleDocTemplate(response, pagesize=portrait(letter))
+    story = []
+
+    logo = os.path.join(settings.BASE_DIR, 'expenseswebsite', 'static', 'img', 'black_white_bg.png')
+    im = Image(logo, 1 * inch, 1 * inch)
+    story.append(im)
+
+    styles = getSampleStyleSheet()
+    style = styles["Heading1"]
+    ptext = '<font size=16>Income Report</font>'
+    story.append(Paragraph(ptext, style))
+    story.append(Spacer(1, 0.5 * inch))
+
+    data = [['Amount', 'Date', 'Source', 'Description']]
+    income = Income.objects.filter(owner=request.user)
+    for income in income:
+        data.append([income.amount, income.date, income.source, income.description])
+
+    table = Table(data)
+    table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.black),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.white),
+        ('GRID', (0, 0), (-1, -1), 1, colors.black)
+    ]))
+    story.append(table)
+    story.append(PageBreak())
+
+    doc.build(story, onFirstPage=pdf_page_template, onLaterPages=pdf_page_template)
+
+    return response
 
 
 @login_required(login_url='/authentication/login')
