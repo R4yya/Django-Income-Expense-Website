@@ -3,18 +3,22 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.http import JsonResponse, HttpResponse
-from django.template.loader import render_to_string
+from django.conf import settings
 
 from userpreferences.models import UserPreference
 from .models import Category, Expense
 from json import loads
 from datetime import date, timedelta, datetime
 import calendar
-from reportlab.lib.pagesizes import letter
-from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter, portrait
+from reportlab.lib import colors
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, Table, TableStyle, PageBreak
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.units import inch
 from openpyxl import Workbook
 from openpyxl.styles import Font, Alignment, Border, Side
 from csv import writer
+import os
 
 
 @login_required(login_url='/authentication/login')
@@ -273,14 +277,47 @@ def expense_stats(request):
 
 @login_required(login_url='/authentication/login')
 def export_expenses_pdf(request):
+    def pdf_page_template(canvas, doc):
+        canvas.saveState()
+        canvas.setFont('Times-Bold', 12)
+        canvas.drawString(1 * inch, 0.75 * inch, 'YourExpenseManager')
+        canvas.restoreState()
+
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename={request.user.username}_expenses_{str(datetime.now())}.pdf'
 
-    p = canvas.Canvas(response, pagesize=letter)
-    p.drawString(100, 750, "Hello World!")
+    doc = SimpleDocTemplate(response, pagesize=portrait(letter))
+    story = []
 
-    p.showPage()
-    p.save()
+    logo = os.path.join(settings.BASE_DIR, 'expenseswebsite', 'static', 'img', 'black_white_bg.png')
+    im = Image(logo, 1 * inch, 1 * inch)
+    story.append(im)
+
+    styles = getSampleStyleSheet()
+    style = styles["Heading1"]
+    ptext = '<font size=16>Expense Report</font>'
+    story.append(Paragraph(ptext, style))
+    story.append(Spacer(1, 0.5 * inch))
+
+    data = [['Amount', 'Date', 'Category', 'Description']]
+    expenses = Expense.objects.filter(owner=request.user)
+    for expense in expenses:
+        data.append([expense.amount, expense.date, expense.category, expense.description])
+
+    table = Table(data)
+    table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.black),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.white),
+        ('GRID', (0, 0), (-1, -1), 1, colors.black)
+    ]))
+    story.append(table)
+    story.append(PageBreak())
+
+    doc.build(story, onFirstPage=pdf_page_template, onLaterPages=pdf_page_template)
 
     return response
 
