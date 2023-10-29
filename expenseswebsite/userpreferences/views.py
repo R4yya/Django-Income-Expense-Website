@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -66,4 +66,28 @@ def change_firstname(request):
 
         messages.success(request, 'Your first name has been updated successfully')
 
-        return render(request, 'preferences/account.html')
+        return redirect('account')
+
+
+@login_required(login_url='/authentication/login')
+def change_lastname(request):
+    if request.method == 'POST':
+        new_lastname = request.POST.get('lastname')
+        user = request.user
+        user.last_name = new_lastname
+        user.save()
+
+        messages.success(request, 'Your last name has been updated successfully')
+
+        return redirect('account')
+
+
+@login_required(login_url='/authentication/login')
+def delete_account(request):
+    if request.method == 'POST':
+        user = request.user
+        user.delete()
+
+        messages.success(request, 'Your account has been successfully deleted')
+
+        return redirect('login')
