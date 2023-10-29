@@ -11,48 +11,54 @@
             <input type="text" class="form-control form-control-sm border-1 rounded-1 py-1" id="username" name="username" value="{{ username }}" readonly>
         </div>
     </div>
-    {% if not firstname %}
-    <div class="row mb-2">
-        <label for="firstname" class="col-md-2 col-form-label py-1">First name:</label>
-        <div class="col-md-2">
-            <input type="text" class="form-control form-control-sm border-1 rounded-1 py-1" id="firstname" name="firstname" placeholder="Not set">
+    <form method="post" action="{% url 'change_firstname' %}">
+        {% csrf_token %}
+        {% if not firstname %}
+        <div class="row mb-2">
+            <label for="firstname" class="col-md-2 col-form-label py-1">First name:</label>
+            <div class="col-md-2">
+                <input type="text" class="form-control form-control-sm border-1 rounded-1 py-1" id="firstname" name="firstname" placeholder="Not set">
+            </div>
+            <div class="col-md-1">
+                <button type="submit" class="btn btn-sm btn-outline-success rounded-1 p-0 px-2 h-100">Change</button>
+            </div>
         </div>
-        <div class="col-md-1">
-            <button href="" class="btn btn-sm btn-outline-success rounded-1 p-0 px-2 h-100">Change</button>
+        {% else %}
+        <div class="row mb-2">
+            <label for="firstname" class="col-md-2 col-form-label py-1">First name:</label>
+            <div class="col-md-2">
+                <input type="text" class="form-control form-control-sm border-1 rounded-1 py-1" id="firstname" name="firstname" value="{{ firstname }}">
+            </div>
+            <div class="col-md-1">
+                <button type="submit" class="btn btn-sm btn-outline-success rounded-1 p-0 px-2 h-100">Change</button>
+            </div>
         </div>
-    </div>
-    {% else %}
-    <div class="row mb-2">
-        <label for="firstname" class="col-md-2 col-form-label py-1">First name:</label>
-        <div class="col-md-2">
-            <input type="text" class="form-control form-control-sm border-1 rounded-1 py-1" id="firstname" name="firstname" value="{{ firstname }}">
+        {% endif %}
+    </form>
+    <form method="post" action="{% url 'change_lastname' %}">
+        {% csrf_token %}
+        {% if not lastname %}
+        <div class="row mb-2">
+            <label for="lastname" class="col-md-2 col-form-label py-1">Last name:</label>
+            <div class="col-md-2">
+                <input type="text" class="form-control form-control-sm border-1 rounded-1 py-1" id="lastname" name="lastname" placeholder="Not set">
+            </div>
+            <div class="col-md-1">
+                <button type="submit" class="btn btn-sm btn-outline-success rounded-1 p-0 px-2 h-100">Change</button>
+            </div>
         </div>
-        <div class="col-md-1">
-            <button href="" class="btn btn-sm btn-outline-success rounded-1 p-0 px-2 h-100">Change</button>
+        {% else %}
+        <div class="row mb-2">
+            <label for="lastname" class="col-md-2 col-form-label py-1">Last name:</label>
+            <div class="col-md-2">
+                <input type="text" class="form-control form-control-sm border-1 rounded-1 py-1" id="lastname" name="lastname" value="{{ lastname }}">
+            </div>
+            <div class="col-md-1">
+                <button type="submit" class="btn btn-sm btn-outline-success rounded-1 p-0 px-2 h-100">Change</button>
+            </div>
         </div>
-    </div>
-    {% endif %}
-    {% if not lastname %}
-    <div class="row mb-2">
-        <label for="lastname" class="col-md-2 col-form-label py-1">Last name:</label>
-        <div class="col-md-2">
-            <input type="text" class="form-control form-control-sm border-1 rounded-1 py-1" id="lastname" name="lastname" placeholder="Not set">
-        </div>
-        <div class="col-md-1">
-            <button href="" class="btn btn-sm btn-outline-success rounded-1 p-0 px-2 h-100">Change</button>
-        </div>
-    </div>
-    {% else %}
-    <div class="row mb-2">
-        <label for="lastname" class="col-md-2 col-form-label py-1">Last name:</label>
-        <div class="col-md-2">
-            <input type="text" class="form-control form-control-sm border-1 rounded-1 py-1" id="lastname" name="lastname" value="{{ lastname }}">
-        </div>
-        <div class="col-md-1">
-            <button href="" class="btn btn-sm btn-outline-success rounded-1 p-0 px-2 h-100">Change</button>
-        </div>
-    </div>
-    {% endif %}
+        {% endif %}
+    </form>
     <div class="row mb-2">
         <label for="email" class="col-md-2 col-form-label py-1">E-mail:</label>
         <div class="col-md-2">
@@ -72,8 +78,11 @@
     <hr class="mb-3 mt-1">
     <h5 class="m-0 mt-5">Account actions</h5>
     <hr class="mb-3 mt-1">
-    <div class="col-md-2">
-        <button href="" class="btn btn-sm btn-outline-danger rounded-1 p-0 px-3 w-100 fs-6">Delete your account</button>
-    </div>
+    <form method="post" action="{% url 'delete_account' %}">
+        {% csrf_token %}
+        <div class="col-md-2">
+            <button href="" class="btn btn-sm btn-outline-danger rounded-1 p-0 px-3 w-100 fs-6">Delete your account</button>
+        </div>
+    </form>
 </div>
 {% endblock %}
