@@ -54,3 +54,16 @@ def account_preferences(request):
     }
 
     return render(request, 'preferences/account.html', context)
+
+
+@login_required(login_url='/authentication/login')
+def change_firstname(request):
+    if request.method == 'POST':
+        new_firstname = request.POST.get('firstname')
+        user = request.user
+        user.first_name = new_firstname
+        user.save()
+
+        messages.success(request, 'Your first name has been updated successfully')
+
+        return render(request, 'preferences/account.html')
